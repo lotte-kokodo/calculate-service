@@ -1,0 +1,1 @@
+select order_status from orders group by order_status

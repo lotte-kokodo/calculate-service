@@ -1,11 +1,14 @@
 package shop.kokodo.calculateservice.entity;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import shop.kokodo.calculateservice.enums.calculate.CalculateType;
+import shop.kokodo.calculateservice.enums.calculate.ProvideStatus;
+import shop.kokodo.calculateservice.enums.calculate.WithdrawalMethod;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 /**
  * packageName    : shop.kokodo.calculateservice.entity
@@ -21,7 +24,9 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Calculate extends BaseEntity{
 
     @Id @GeneratedValue
@@ -32,17 +37,28 @@ public class Calculate extends BaseEntity{
     @JoinColumn(name = "commission_id")
     private Commission commission;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private CalculateType calculateType;
 
     private String supportRate;
 
-    private String withdrawalMethod;
+    @Enumerated(EnumType.STRING)
+    private ProvideStatus provideStatus;
+
+    @Enumerated(EnumType.STRING)
+    private WithdrawalMethod withdrawalMethod;
 
     private Long finalPaymentCost;
 
-    private boolean paymentStatus;
+    private Long sellerId;
 
-    private LocalDateTime date;
-
-    private LocalDateTime purchaseConfirmationDuration;
+    public static Calculate createCalculate(Commission commission, Long cost){
+        return Calculate.builder()
+                .commission(commission)
+                .calculateType(CalculateType.MAIN_CALCULATE)
+                .supportRate("100%")
+                .withdrawalMethod(WithdrawalMethod.BASIC_WITHDRAWAL)
+                .finalPaymentCost(cost)
+                .build();
+    }
 }

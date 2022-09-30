@@ -1,9 +1,7 @@
 package shop.kokodo.calculateservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -21,7 +19,9 @@ import javax.persistence.*;
  */
 @Entity
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 public class Commission extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +31,8 @@ public class Commission extends BaseEntity{
     @JsonIgnore
     @OneToOne(mappedBy = "commission", fetch = FetchType.LAZY)
     private Calculate calculate;
+
+    private Long sellerId;
 
     private Long basic;
 
@@ -45,4 +47,5 @@ public class Commission extends BaseEntity{
     private Long mediumCompanyCostRefund;
 
     private Long etc;
+
 }
