@@ -1,4 +1,4 @@
-package shop.kokodo.calculateservice.scheduler;//package shop.kokodo.calculateservice.scheduler;
+//package shop.kokodo.calculateservice.scheduler;
 //
 //import org.quartz.JobDetail;
 //import org.quartz.Scheduler;
