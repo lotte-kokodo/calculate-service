@@ -16,7 +16,7 @@ spring:
     sampler:
       probability: 1.0
   profiles:
-    active: local
+    active: mysql
   batch:
     job:
       # qurtz ??? ?? ????? enabled? true? ????.
@@ -24,11 +24,13 @@ spring:
       names: ${job.name:NONE}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
     properties:
-      hibernate.format_sql: true
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
 #    database-platform: org.hibernate.dialect.H2Dialect
 eureka:
   instance:
@@ -78,7 +80,7 @@ spring:
     hikari:
       jdbc-url: jdbc:mysql://localhost:3306/mydb?useUnicode=true&characterEncoding=utf8
       username: namhyeop
-      password: {password}
+      password: "!ska1300918"
       driver-class-name: com.mysql.jdbc.Driver
   batch:
     jdbc:
