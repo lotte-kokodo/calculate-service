@@ -1,9 +1,6 @@
 package shop.kokodo.calculateservice.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import shop.kokodo.calculateservice.enums.order.OrderStatus;
 
 import javax.persistence.*;
@@ -22,6 +19,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Getter
+@Setter
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @Table(name = "orders")
@@ -44,4 +42,28 @@ public class Order extends BaseEntity{
     private Long totalPrice;
 
     private LocalDateTime orderDate;
+
+    public Order(Long id, Long userId, OrderStatus orderStatus, String deliveryName, String deliveryAddress, Long totalPrice, LocalDateTime orderDate) {
+        this.id = id;
+        this.userId = userId;
+        this.orderStatus = orderStatus;
+        this.deliveryName = deliveryName;
+        this.deliveryAddress = deliveryAddress;
+        this.totalPrice = totalPrice;
+        this.orderDate = orderDate;
+    }
+
+    public Order(BaseEntityBuilder<?, ?> b, Long userId, OrderStatus orderStatus, String deliveryName, String deliveryAddress, Long totalPrice, LocalDateTime orderDate) {
+        super(b);
+        this.userId = userId;
+        this.orderStatus = orderStatus;
+        this.deliveryName = deliveryName;
+        this.deliveryAddress = deliveryAddress;
+        this.totalPrice = totalPrice;
+        this.orderDate = orderDate;
+    }
+
+    public Order() {
+
+    }
 }

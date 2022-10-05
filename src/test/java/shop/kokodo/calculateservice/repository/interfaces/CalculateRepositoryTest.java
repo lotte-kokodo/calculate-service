@@ -1,18 +1,18 @@
 package shop.kokodo.calculateservice.repository.interfaces;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import shop.kokodo.calculateservice.entity.Calculate;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * packageName    : shop.kokodo.calculateservice.repository.interfaces
- * fileName       : CalculateRepository
+ * fileName       : CalculateRepositoryTest
  * author         : namhyeop
- * date           : 2022/10/04
+ * date           : 2022/10/05
  * description    :
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2022/10/04        namhyeop       최초 생성
+ * 2022/10/05        namhyeop       최초 생성
  */
-public interface CalculateRepository extends JpaRepository<Calculate, Long> {
+class CalculateRepositoryTest {
+
 }

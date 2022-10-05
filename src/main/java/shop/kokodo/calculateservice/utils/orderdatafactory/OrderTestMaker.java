@@ -73,8 +73,8 @@ public class OrderTestMaker {
         atb7.add("1964-06-15 16:21:24");
         atb7.add("1964-06-16 16:21:24");
 
-        int maxSize = 1500;
-        for (int i = 500; i <= maxSize; i++) {
+        int maxSize = 499;
+        for (int i = 1; i <= maxSize; i++) {
             String iatb1 = String.valueOf(i);
             String iatb2 = String.valueOf(i + 1);
             String iatb3 = "\'" + String.valueOf(atb3.get((int) (Math.random() * 3000) % 3)) + "\'";

@@ -15,6 +15,7 @@ import org.springframework.batch.core.JobExecutionListener;
  * 2022/09/27        namhyeop       최초 생성
  */
 public class JobTimeListener implements JobExecutionListener {
+
     @Override
     public void beforeJob(JobExecution jobExecution) {
 

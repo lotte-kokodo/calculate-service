@@ -1,4 +1,4 @@
-//package shop.kokodo.calculateservice.supplierreader;
+package shop.kokodo.calculateservice.supplierreader;//package shop.kokodo.calculateservice.supplierreader;
 //
 //import org.springframework.batch.item.database.AbstractPagingItemReader;
 //

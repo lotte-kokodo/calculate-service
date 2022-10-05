@@ -5,7 +5,6 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +23,7 @@ import shop.kokodo.calculateservice.tasklet.ApiStartTasklet;
  * -----------------------------------------------------------
  * 2022/09/27        namhyeop       최초 생성
  */
+
 @Configuration
 @RequiredArgsConstructor
 public class CalculateJobConfiguration {

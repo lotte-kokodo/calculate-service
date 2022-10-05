@@ -82,6 +82,9 @@ spring:
       username: namhyeop
       password: "!ska1300918"
       driver-class-name: com.mysql.jdbc.Driver
+      maximum-pool-size: 200
+#      connection-timeout: 3000
+  #      max-lifetime: 30000
   batch:
     jdbc:
       initialize-schema: always

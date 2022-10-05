@@ -19,9 +19,10 @@ import javax.persistence.*;
  */
 @Entity
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
+@AllArgsConstructor
+//@Builder
+@ToString
 public class Commission extends BaseEntity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,18 +35,29 @@ public class Commission extends BaseEntity{
 
     private Long sellerId;
 
-    private Long basic;
+    private Double basic;
 
-    private Long salesPromotion;
+    private Double salesPromotion;
 
-    private Long firstPaymentDelivery;
+    private Double firstPaymentDelivery;
 
-    private Long deliverySupport;
+    private Double deliverySupport;
 
-    private Long discountSupport;
+    private Double discountSupport;
 
-    private Long mediumCompanyCostRefund;
+    private Double mediumCompanyCostRefund;
 
-    private Long etc;
+    private Double etc;
 
+    public Commission(Calculate calculate, Long sellerId, Double basic, Double salesPromotion, Double firstPaymentDelivery, Double deliverySupport, Double discountSupport, Double mediumCompanyCostRefund, Double etc) {
+        this.calculate = calculate;
+        this.sellerId = sellerId;
+        this.basic = basic;
+        this.salesPromotion = salesPromotion;
+        this.firstPaymentDelivery = firstPaymentDelivery;
+        this.deliverySupport = deliverySupport;
+        this.discountSupport = discountSupport;
+        this.mediumCompanyCostRefund = mediumCompanyCostRefund;
+        this.etc = etc;
+    }
 }

@@ -32,11 +32,11 @@ public enum WithdrawalMethod implements EnumType {
 
     @Override
     public String getKey() {
-        return null;
+        return name();
     }
 
     @Override
     public String getValue() {
-        return null;
+        return value;
     }
 }

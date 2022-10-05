@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.calculateservice.entity.Calculate;
 import shop.kokodo.calculateservice.entity.Commission;
-import shop.kokodo.calculateservice.entity.Order;
 import shop.kokodo.calculateservice.repository.interfaces.CalculateRepository;
 
 /**
@@ -33,19 +32,18 @@ public class CalculateService {
 
     public Long getFinalPaymentCost(Commission commission, Long money) {
 
-        Long basicCost = money * commission.getBasic();
-        Long salesPromotionCost = money * commission.getSalesPromotion();
-        Long firstPaymentDeliveryCost = money * commission.getFirstPaymentDelivery();
+        Long basicCost = (long)(money * commission.getBasic());
+        Long salesPromotionCost = (long)(money * commission.getSalesPromotion());
 
-        Long deliverySupportCost = money * commission.getDeliverySupport();
-        Long disCountSupportCost = money * commission.getDiscountSupport();
-        Long mediumCompanyCostRefundCost = money * commission.getMediumCompanyCostRefund();
-        Long etCost = money * commission.getEtc();
+        Long firstPaymentDeliveryCost = (long)(money * commission.getFirstPaymentDelivery());
+        Long deliverySupportCost = (long)(money * commission.getDeliverySupport());
+        Long disCountSupportCost = (long)(money * commission.getDiscountSupport());
+        Long mediumCompanyCostRefundCost = (long)(money * commission.getMediumCompanyCostRefund());
+        Long etCost = (long)(money * commission.getEtc());
 
         Long burdenCost = money - (basicCost + salesPromotionCost + firstPaymentDeliveryCost);
         Long supportCost = deliverySupportCost + disCountSupportCost + mediumCompanyCostRefundCost + etCost;
         Long finalPaymentCost = money - burdenCost + supportCost;
-
         return finalPaymentCost;
     }
 }
