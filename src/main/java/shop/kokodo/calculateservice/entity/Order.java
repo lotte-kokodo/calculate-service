@@ -1,6 +1,8 @@
 package shop.kokodo.calculateservice.entity;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import shop.kokodo.calculateservice.enums.order.OrderStatus;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
  * author         : namhyeop
  * date           : 2022/09/27
  * description    :
+ * Order Entity
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -19,11 +22,9 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Getter
-@Setter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "orders")
-public class Order extends BaseEntity{
+public class Order extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,27 +44,12 @@ public class Order extends BaseEntity{
 
     private LocalDateTime orderDate;
 
-    public Order(Long id, Long userId, OrderStatus orderStatus, String deliveryName, String deliveryAddress, Long totalPrice, LocalDateTime orderDate) {
-        this.id = id;
+    public Order(Long userId, OrderStatus orderStatus, String deliveryName, String deliveryAddress, Long totalPrice, LocalDateTime orderDate) {
         this.userId = userId;
         this.orderStatus = orderStatus;
         this.deliveryName = deliveryName;
         this.deliveryAddress = deliveryAddress;
         this.totalPrice = totalPrice;
         this.orderDate = orderDate;
-    }
-
-    public Order(BaseEntityBuilder<?, ?> b, Long userId, OrderStatus orderStatus, String deliveryName, String deliveryAddress, Long totalPrice, LocalDateTime orderDate) {
-        super(b);
-        this.userId = userId;
-        this.orderStatus = orderStatus;
-        this.deliveryName = deliveryName;
-        this.deliveryAddress = deliveryAddress;
-        this.totalPrice = totalPrice;
-        this.orderDate = orderDate;
-    }
-
-    public Order() {
-
     }
 }

@@ -10,6 +10,7 @@ import shop.kokodo.calculateservice.enums.EnumType;
  * author         : namhyeop
  * date           : 2022/09/29
  * description    :
+ * CalculateType Enum Value
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

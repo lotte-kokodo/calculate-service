@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ExecutionContext;
-import shop.kokodo.calculateservice.repository.interfaces.OrderRepository;
+import shop.kokodo.calculateservice.repository.order.OrderRepository;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -16,6 +16,7 @@ import java.util.Map;
  * author         : namhyeop
  * date           : 2022/09/29
  * description    :
+ * 멀티스레드에게 데이터를 전달해주기 위해 데이터를 파티셔닝하는 Partioner
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -32,7 +33,6 @@ public class OrderIdRangePartitioner implements Partitioner {
 
     @Override
     public Map<String, ExecutionContext> partition(int gridSize) {
-        log.info("live point1");
         long min = orderRepository.findMinId(startDate, endDate);
         long max = orderRepository.findMaxId(startDate, endDate);
         log.info("minid = {}, max id = {}", min, max);
@@ -51,8 +51,8 @@ public class OrderIdRangePartitioner implements Partitioner {
                 end = max;
             }
 
-            value.putLong("minId", start); // 각 파티션마다 사용될 minId
-            value.putLong("maxId", end); // 각 파티션마다 사용될 maxId
+            value.putLong("minId", start);
+            value.putLong("maxId", end);
             start += targetSize;
             end += targetSize;
             number++;

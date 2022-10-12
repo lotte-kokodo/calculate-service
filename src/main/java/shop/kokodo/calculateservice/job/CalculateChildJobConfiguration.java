@@ -7,7 +7,6 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * author         : namhyeop
  * date           : 2022/09/27
  * description    :
+ * CalculateChildJob Config File, Job의 수행을 이어받는다.
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -34,7 +34,7 @@ public class CalculateChildJobConfiguration {
     private final JobLauncher jobLauncher;
 
     @Bean
-    public Step calculateChildJobStep(){
+    public Step calculateChildJobStep() {
         return stepBuilderFactory.get("calculateChildJobStep")
                 .job(childJob())
                 .launcher(jobLauncher)

@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
-
 /**
  * packageName    : shop.kokodo.calculateservice.entity
  * fileName       : OrderProduct
  * author         : namhyeop
  * date           : 2022/09/30
  * description    :
+ * OrderProduct Entity
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -39,9 +38,11 @@ public class OrderProduct extends BaseEntity {
     private Order order;
 
     private Long memberId;
+
     private Long productId;
 
     private Integer qty;
+
     private Integer unitPrice;
 
 }

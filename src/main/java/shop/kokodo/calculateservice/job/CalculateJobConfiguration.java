@@ -18,6 +18,7 @@ import shop.kokodo.calculateservice.tasklet.ApiStartTasklet;
  * author         : namhyeop
  * date           : 2022/09/27
  * description    :
+ * CalculateParentJob Config File, Job의 최초 수행 파일
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -35,7 +36,7 @@ public class CalculateJobConfiguration {
     private final Step calculateChildJobStep;
 
     @Bean
-    public Job calculateParentJob(){
+    public Job calculateParentJob() {
         return jobBuilderFactory.get("calculateParentJob")
                 .listener(new JobTimeListener())
                 .incrementer(new RunIdIncrementer())
@@ -46,14 +47,14 @@ public class CalculateJobConfiguration {
     }
 
     @Bean
-    public Step startSignalStep(){
+    public Step startSignalStep() {
         return stepBuilderFactory.get("startSignalStep")
                 .tasklet(apiStartTasklet)
                 .build();
     }
 
     @Bean
-    public Step endSignalStep(){
+    public Step endSignalStep() {
         return stepBuilderFactory.get("endSignalStep")
                 .tasklet(apiEndTasklet)
                 .build();

@@ -1,7 +1,5 @@
 package shop.kokodo.calculateservice.repository.interfaces;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * packageName    : shop.kokodo.calculateservice.repository.interfaces
  * fileName       : DeliveryRepositoryTest

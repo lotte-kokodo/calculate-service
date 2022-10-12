@@ -37,21 +37,21 @@ public class Response {
     /**
      * 요청이 성공하고 응답 데이터가 필요 없을 경우 사용
      */
-    public static Response success(){
+    public static Response success() {
         return new Response(true, 0, null);
     }
 
     /**
      * 성공했을 경우 응답데이터가 있을 경우 사용
      */
-    public static <T> Response success(T data){
-        return new Response(true, 0, new Success<>(data));
+    public static <T> Response success(T data) {
+        return new Response(true, 200, new Success<>(data));
     }
 
     /**
      * 실패할 경우 실패 메시지와 같이 반환
      */
-    public static Response failure(int code, String msg){
+    public static Response failure(int code, String msg) {
         return new Response(false, code, new Failure(msg));
     }
 }

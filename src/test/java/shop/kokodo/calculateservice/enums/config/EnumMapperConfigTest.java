@@ -1,16 +1,19 @@
 package shop.kokodo.calculateservice.enums.config;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import shop.kokodo.calculateservice.dto.EnumValue;
 import shop.kokodo.calculateservice.enums.EnumMapper;
+import shop.kokodo.calculateservice.enums.EnumType;
 import shop.kokodo.calculateservice.enums.calculate.CalculateType;
 import shop.kokodo.calculateservice.enums.calculate.CommissionType;
 import shop.kokodo.calculateservice.enums.calculate.ProvideStatus;
 import shop.kokodo.calculateservice.enums.calculate.WithdrawalMethod;
 import shop.kokodo.calculateservice.enums.order.OrderStatus;
-import shop.kokodo.calculateservice.enums.EnumType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,17 +23,17 @@ import static org.assertj.core.api.Assertions.assertThat;
  * author         : namhyeop
  * date           : 2022/09/27
  * description    :
+ * EnumMapper 테스트
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2022/09/27        namhyeop       최초 생성
  */
-//@SpringBootTest
+@SpringBootTest
 class EnumMapperConfigTest {
-//    @Autowired EnumMapper enumMapper;
 
     @Test
-    public void checkEnumModelType() throws Exception{
+    public void checkEnumModelType() throws Exception {
         List<EnumType> enumTypes = new ArrayList<>();
         enumTypes.add(OrderStatus.ORDER_SUCCESS);
         enumTypes.add(OrderStatus.PURCHASE_CONFIRM);
@@ -43,7 +46,7 @@ class EnumMapperConfigTest {
     }
 
     @Test
-    public void CalculateTypeEnumMakeValeTest() throws Exception{
+    public void CalculateTypeEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();
         enumMapper.put("CalculateType", CalculateType.class);
 
@@ -55,7 +58,7 @@ class EnumMapperConfigTest {
     }
 
     @Test
-    public void CommissionTypeEnumMakeValeTest() throws Exception{
+    public void CommissionTypeEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();
         enumMapper.put("CommissionType", CommissionType.class);
 
@@ -71,20 +74,21 @@ class EnumMapperConfigTest {
     }
 
     @Test
-    public void provideStatusEnumMakeValeTest() throws Exception{
+    public void provideStatusEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();
         enumMapper.put("ProvideStatus", ProvideStatus.class);
 
         Map<String, List<EnumValue>> provideStatus = enumMapper.get("ProvideStatus");
         List<EnumValue> provideStatusList = provideStatus.get("ProvideStatus");
 
-        assertThat(provideStatusList.get(0).getValue()).isEqualTo("지급확정");
-        assertThat(provideStatusList.get(1).getValue()).isEqualTo("지급예정");
-        assertThat(provideStatusList.get(2).getValue()).isEqualTo("지급보류");
+        assertThat(provideStatusList.get(0).getValue()).isEqualTo("전체");
+        assertThat(provideStatusList.get(1).getValue()).isEqualTo("지급확정");
+        assertThat(provideStatusList.get(2).getValue()).isEqualTo("지급예정");
+        assertThat(provideStatusList.get(3).getValue()).isEqualTo("지급보류");
     }
 
     @Test
-    public void withdrawalEnumMakeValeTest() throws Exception{
+    public void withdrawalEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();
         enumMapper.put("WithdrawalMethod", WithdrawalMethod.class);
 
@@ -98,7 +102,7 @@ class EnumMapperConfigTest {
     }
 
     @Test
-    public void OrderStatusEnumMakeValeTest() throws Exception{
+    public void OrderStatusEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();
         enumMapper.put("OrderStatus", OrderStatus.class);
 

@@ -1,4 +1,5 @@
-package shop.kokodo.calculateservice.service;//package shop.kokodo.calculateservice.service;
+//TODO: 통합연결, 배포시 주석해제
+//package shop.kokodo.calculateservice.service;
 //
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;

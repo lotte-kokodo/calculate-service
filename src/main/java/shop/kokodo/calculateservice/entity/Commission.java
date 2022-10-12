@@ -21,35 +21,56 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-//@Builder
+@Builder
 @ToString
-public class Commission extends BaseEntity{
+public class Commission extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "commission_id")
     private Long id;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "commission", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "commission", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Calculate calculate;
 
+    @Column(nullable = false)
     private Long sellerId;
 
-    private Double basic;
+    @Column(nullable = false)
+    private Long basic;
 
-    private Double salesPromotion;
+    private Long salesPromotion;
 
-    private Double firstPaymentDelivery;
+    private Long firstPaymentDelivery;
 
-    private Double deliverySupport;
+    private Long deliverySupport;
 
-    private Double discountSupport;
+    private Long discountSupport;
 
-    private Double mediumCompanyCostRefund;
+    private Long mediumCompanyCostRefund;
 
-    private Double etc;
+    private Long etc;
 
-    public Commission(Calculate calculate, Long sellerId, Double basic, Double salesPromotion, Double firstPaymentDelivery, Double deliverySupport, Double discountSupport, Double mediumCompanyCostRefund, Double etc) {
+    public void changeCalculate(Calculate calculate) {
+        this.calculate = calculate;
+    }
+
+    public static Commission createCommission(Calculate calculate, Long sellerId, Long basic, Long salesPromotion, Long firstPaymentDelivery, Long deliverySupport, Long discountSupport, Long mediumCompanyCostRefund, Long etc) {
+        return Commission.builder()
+                .calculate(calculate)
+                .sellerId(sellerId)
+                .basic(basic)
+                .salesPromotion(salesPromotion)
+                .firstPaymentDelivery(firstPaymentDelivery)
+                .deliverySupport(deliverySupport)
+                .discountSupport(discountSupport)
+                .mediumCompanyCostRefund(mediumCompanyCostRefund)
+                .etc(etc)
+                .build();
+    }
+
+    public Commission(Calculate calculate, Long sellerId, Long basic, Long salesPromotion, Long firstPaymentDelivery, Long deliverySupport, Long discountSupport, Long mediumCompanyCostRefund, Long etc) {
         this.calculate = calculate;
         this.sellerId = sellerId;
         this.basic = basic;

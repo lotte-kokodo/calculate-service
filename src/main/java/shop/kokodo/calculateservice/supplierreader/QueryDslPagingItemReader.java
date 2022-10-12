@@ -1,4 +1,6 @@
-package shop.kokodo.calculateservice.supplierreader;//package shop.kokodo.calculateservice.supplierreader;
+//TODO: Spring Batch에서 QueryDsl을 사용하기위해 존재하는 객체
+
+//package shop.kokodo.calculateservice.supplierreader;
 //
 //import org.springframework.batch.item.database.AbstractPagingItemReader;
 //
@@ -12,6 +14,7 @@ package shop.kokodo.calculateservice.supplierreader;//package shop.kokodo.calcul
 // * author         : namhyeop
 // * date           : 2022/09/29
 // * description    :
+// * Spring Batch에서 QueryDsl을 사용하기위해 존재하는 객체
 // * ===========================================================
 // * DATE              AUTHOR             NOTE
 // * -----------------------------------------------------------

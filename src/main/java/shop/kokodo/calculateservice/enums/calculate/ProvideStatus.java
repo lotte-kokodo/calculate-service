@@ -10,6 +10,7 @@ import shop.kokodo.calculateservice.enums.EnumType;
  * author         : namhyeop
  * date           : 2022/09/29
  * description    :
+ * ProvideStatus Enum Value
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -18,6 +19,7 @@ import shop.kokodo.calculateservice.enums.EnumType;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public enum ProvideStatus implements EnumType {
 
+    ALL("전체"),
     PROVIDE_SUCCESS("지급확정"),
     PROVIDE_SCHEDULE("지급예정"),
     PROVIDE_POSTPONE("지급보류");

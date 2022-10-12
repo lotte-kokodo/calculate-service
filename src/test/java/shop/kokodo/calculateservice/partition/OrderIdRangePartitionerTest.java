@@ -6,13 +6,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.item.ExecutionContext;
-import shop.kokodo.calculateservice.repository.interfaces.OrderRepository;
+import shop.kokodo.calculateservice.repository.order.OrderRepository;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
 /**
@@ -20,7 +19,8 @@ import static org.mockito.ArgumentMatchers.any;
  * fileName       : OrderIdRangePartitionerTest
  * author         : namhyeop
  * date           : 2022/09/29
- * description    :
+ * description    :트
+ * Partioning 기능 테스트
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -44,7 +44,7 @@ class OrderIdRangePartitionerTest {
                 .when(orderRepository.findMaxId(any(LocalDateTime.class), any(LocalDateTime.class)))
                 .thenReturn(10L);
 
-        partitioner = new OrderIdRangePartitioner(orderRepository, LocalDateTime.of(2021, 5, 1,12,10), LocalDateTime.of(2021, 12, 31, 12, 10)); // (2)
+        partitioner = new OrderIdRangePartitioner(orderRepository, LocalDateTime.of(2021, 5, 1, 12, 10), LocalDateTime.of(2021, 12, 31, 12, 10)); // (2)
 
         //when
         Map<String, ExecutionContext> executionContextMap = partitioner.partition(5); // (3)
