@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import net.bytebuddy.asm.Advice;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,6 +20,7 @@ import java.time.LocalDateTime;
  * author         : namhyeop
  * date           : 2022/09/27
  * description    :
+ * BaseEnttity 객체. 날짜를 확인하기 위해 사용
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

@@ -2,6 +2,8 @@ plugins {
     id 'org.springframework.boot' version '2.7.4'
     id 'io.spring.dependency-management' version '1.0.14.RELEASE'
     id 'java'
+    //querydsl 추가
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     //==================Spring Rest docs==================
     id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
@@ -22,7 +24,10 @@ repositories {
     mavenCentral()
 }
 
+ext["hibernate.version"] = "5.6.5.Final"
+
 ext {
+    queryDslVersion = "5.0.0"
     set('springCloudVersion', "2021.0.4")
     //==================Spring Rest docs==================
     snippetsDir = file('build/generated-snippets')
@@ -34,7 +39,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-batch'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+//    implementation "org.springframework.cloud:spring-cloud-sleuth-zipkin"
+
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.3.RELEASE'
+
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
@@ -44,6 +53,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     //resilience4j
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
+
+    //Querydsl 추가
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
@@ -63,6 +77,8 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     //kafka
     implementation 'org.springframework.kafka:spring-kafka'
+// https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: 'r05'
 
 }
 
@@ -99,4 +115,21 @@ bootJar {
     }
 }
 
+//querydsl 추가 끝
 
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+//querydsl 추가 끝

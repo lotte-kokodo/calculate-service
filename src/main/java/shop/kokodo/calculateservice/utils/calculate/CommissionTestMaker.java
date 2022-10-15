@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * author         : namhyeop
  * date           : 2022/10/04
  * description    :
+ * ComissionData 생성기
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

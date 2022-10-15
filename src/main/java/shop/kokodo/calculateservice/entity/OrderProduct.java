@@ -1,14 +1,9 @@
 package shop.kokodo.calculateservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-
-import static javax.persistence.FetchType.LAZY;
 
 /**
  * packageName    : shop.kokodo.calculateservice.entity
@@ -16,6 +11,7 @@ import static javax.persistence.FetchType.LAZY;
  * author         : namhyeop
  * date           : 2022/09/30
  * description    :
+ * OrderProduct Entity
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -39,9 +35,11 @@ public class OrderProduct extends BaseEntity {
     private Order order;
 
     private Long memberId;
+
     private Long productId;
 
     private Integer qty;
+
     private Integer unitPrice;
 
 }

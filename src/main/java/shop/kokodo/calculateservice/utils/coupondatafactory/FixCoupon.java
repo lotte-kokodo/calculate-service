@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * author         : namhyeop
  * date           : 2022/09/28
  * description    :
+ * FixCouponData 생성기
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -101,7 +102,7 @@ public class FixCoupon {
             String iatb7 = "\"" + String.valueOf(atb7.get((int) (Math.random() * 9000) % 10)) + "\"";
             String iatb8 = String.valueOf((int) (Math.random() * 1000000) % 1000);
 
-            String column2 = iatb1 + ", " + iatb2 + ", " + iatb3 + ", " + iatb4 + ", " + iatb5 + ", " + iatb6 + ", " + iatb7 + ","+ iatb8;
+            String column2 = iatb1 + ", " + iatb2 + ", " + iatb3 + ", " + iatb4 + ", " + iatb5 + ", " + iatb6 + ", " + iatb7 + "," + iatb8;
             String query = "insert into " + tableName + " (" + column + ") values " + "(" + column2 + ");";
 //            if(i == maxSize){
 //                query = query.substring(0, query.length() - 1);

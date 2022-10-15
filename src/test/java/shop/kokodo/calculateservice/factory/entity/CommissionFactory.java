@@ -1,7 +1,6 @@
 package shop.kokodo.calculateservice.factory.entity;
 
 import shop.kokodo.calculateservice.entity.Commission;
-import shop.kokodo.calculateservice.enums.calculate.CommissionType;
 
 /**
  * packageName    : shop.kokodo.calculateservice.factory.entity
@@ -15,7 +14,7 @@ import shop.kokodo.calculateservice.enums.calculate.CommissionType;
  * 2022/10/04        namhyeop       최초 생성
  */
 public class CommissionFactory {
-    public static Commission createCommission(){
-        return new Commission(null, 1L, Double.parseDouble(CommissionType.BASIC.getValue()), Double.parseDouble(CommissionType.SALES_PROMOTION.getValue()), Double.parseDouble(CommissionType.FIRST_PAYMENT_DELIVERY.getValue()), Double.parseDouble(CommissionType.DELIVERY_SUPPORT.getValue()), Double.parseDouble(CommissionType.DISCOUNT_SUPPORT.getValue()), Double.parseDouble(CommissionType.MEDIUM_COMPANY_COST_REFUND.getValue()), Double.parseDouble(CommissionType.ETC.getValue()));
+    public static Commission createCommission() {
+        return new Commission(null, 1L, 10000L, 20000L, 30000L, 40000L, 5000L, 6000L, 7000L);
     }
 }

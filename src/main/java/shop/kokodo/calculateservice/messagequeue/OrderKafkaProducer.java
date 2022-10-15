@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import shop.kokodo.calculateservice.dto.OrderDto;
 
 /**
  * packageName    : shop.kokodo.calculateservice.messagequeue
@@ -14,6 +13,7 @@ import shop.kokodo.calculateservice.dto.OrderDto;
  * author         : namhyeop
  * date           : 2022/09/27
  * description    :
+ * OrderKafka Producer
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -27,12 +27,12 @@ public class OrderKafkaProducer {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public void sendOrderStatus(String topic, Long orderId){
+    public void sendOrderStatus(String topic, Long orderId) {
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = "";
-        try{
+        try {
             jsonInString = mapper.writeValueAsString(orderId);
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             ex.printStackTrace();
         }
 

@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * author         : namhyeop
  * date           : 2022/09/28
  * description    :
+ * UserCouponData 생성기
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

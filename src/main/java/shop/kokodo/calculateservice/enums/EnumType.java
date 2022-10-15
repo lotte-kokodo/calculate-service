@@ -1,13 +1,12 @@
 package shop.kokodo.calculateservice.enums;
 
-import shop.kokodo.calculateservice.enums.calculate.CalculateType;
-
 /**
  * packageName    : shop.kokodo.calculateservice.utils
  * fileName       : EnumType
  * author         : namhyeop
  * date           : 2022/09/27
  * description    :
+ * EnumType interface
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -16,5 +15,6 @@ import shop.kokodo.calculateservice.enums.calculate.CalculateType;
 public interface EnumType {
 
     String getKey();
+
     String getValue();
 }

@@ -1,10 +1,11 @@
 package shop.kokodo.calculateservice.enums;
 
-import lombok.Getter;
-import org.springframework.context.annotation.Bean;
 import shop.kokodo.calculateservice.dto.EnumValue;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
  * author         : namhyeop
  * date           : 2022/09/27
  * description    :
+ * EnumType의 자료를 사용하기 쉽해 존재하는 EnumMapper
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
  */
 
 public class EnumMapper {
+
     private Map<String, List<EnumValue>> factory = new HashMap<>();
 
     private List<EnumValue> toEnumValues(Class<? extends EnumType> e) {
@@ -37,14 +40,7 @@ public class EnumMapper {
         return factory;
     }
 
-    //Function identity는 인자로 받아온 값의 타입을 반환한다.
     public Map<String, List<EnumValue>> get(String keys) {
-
-//        Map<String, List<EnumValue>> result = new LinkedHashMap<>();
-//        for (String key : keys.split(",")) {
-//            result.put(key, factory.get(key));
-//        }
-
         return Arrays.stream(keys.split(","))
                 .collect(Collectors.toMap(Function.identity(), key -> factory.get(key)));
     }
