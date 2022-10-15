@@ -3,7 +3,10 @@ package shop.kokodo.calculateservice.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import shop.kokodo.calculateservice.dto.response.Response;
+
+import java.util.List;
 
 /**
  * packageName    : shop.kokodo.calculateservice.client
@@ -19,6 +22,6 @@ import shop.kokodo.calculateservice.dto.response.Response;
  */
 @FeignClient(name = "product-service")
 public interface ProductServiceClient {
-    @GetMapping("/product-service/{prodcutId}/productSellerId")
-    Response getProductSellerId(@PathVariable Long productId);
+    @GetMapping("/product-service/productSellerId")
+    Response getProductSellerId(@RequestBody List<Long> productId);
 }

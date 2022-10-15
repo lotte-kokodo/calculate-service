@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import shop.kokodo.calculateservice.dto.CommissionPolicyDto;
+import shop.kokodo.calculateservice.dto.CostAndCommissionDto;
 import shop.kokodo.calculateservice.entity.Calculate;
 import shop.kokodo.calculateservice.entity.Commission;
 import shop.kokodo.calculateservice.entity.Order;
@@ -23,11 +24,14 @@ import shop.kokodo.calculateservice.messagequeue.OrderKafkaProducer;
 import shop.kokodo.calculateservice.partition.OrderIdRangePartitioner;
 import shop.kokodo.calculateservice.repository.order.OrderRepository;
 import shop.kokodo.calculateservice.service.CalculateService;
+import shop.kokodo.calculateservice.service.ProductService;
+import shop.kokodo.calculateservice.service.SellerService;
 
 import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,9 +63,9 @@ public class CalculateStepConfiguration {
 
     private final OrderRepository orderRepository;
     //TODO:(1)통합 테스트시 주석해제
-//    private final ProductService productService;
+    private final ProductService productService;
     //TODO:(1)통합 테스트시 주석해제
-//        private final SellerService sellerService;
+    private final SellerService sellerService;
     private final CalculateService calculateService;
     private final OrderKafkaProducer orderKafkaProducer;
     private int chunkSize;
@@ -170,21 +174,23 @@ public class CalculateStepConfiguration {
         return items -> {
             System.out.println("====================== writer start============================");
             for (Order o : items) {
+                log.info("======================process 1======================");
                 //TODO: (1)통합 테스트 진행시 주석 해제
-//                Long sellerId = productService.getSellerId(o.getId());
-                Long sellerId = 1L;
-                //TODO: (1)통합 테스트시 주석해제
-//                CommissionPolicyDto commissionPolicy = sellerService.findCommissionPolicy(sellerId);
-                CommissionPolicyDto commissionPolicy = new CommissionPolicyDto(1L, Double.parseDouble(CommissionType.BASIC.getValue()), Double.parseDouble(CommissionType.SALES_PROMOTION.getValue()), Double.parseDouble(CommissionType.FIRST_PAYMENT_DELIVERY.getValue()), Double.parseDouble(CommissionType.DELIVERY_SUPPORT.getValue()), Double.parseDouble(CommissionType.DISCOUNT_SUPPORT.getValue()), Double.parseDouble(CommissionType.MEDIUM_COMPANY_COST_REFUND.getValue()), Double.parseDouble(CommissionType.ETC.getValue()));
-                Map<String, Object> commissionAndCost = calculateService.getCommission(commissionPolicy, o.getTotalPrice());
-
-                Long cost = (Long) commissionAndCost.get("cost");
-                Commission commission = (Commission) commissionAndCost.get("commission");
-
-                Calculate calculate = Calculate.createCalculate(commission, cost);
-                calculateService.saveCalculate(calculate);
+                List<Long> sellerId = productService.getSellerId(o.getId());
+//                Long sellerId = 1L;
+                log.info("======================process 5======================");
+//                TODO: (1)통합 테스트시 주석해제
+                //sellerId와 commissionPolicy의 idx 관계는 절대적으로 지켜져야한다 예를 들어 sellerId(0)번째의 수수료는 commissionPolicy(0)번째이다. sellerId(0)일 경우 commissionPolicy(1)이면 안된다.
+                List<CommissionPolicyDto> commissionPolicy = sellerService.findCommissionPolicy(sellerId);
+                log.info("======================process 6======================");
+//                CommissionPolicyDto commissionPolicy = new CommissionPolicyDto(1L, Double.parseDouble(CommissionType.BASIC.getValue()), Double.parseDouble(CommissionType.SALES_PROMOTION.getValue()), Double.parseDouble(CommissionType.FIRST_PAYMENT_DELIVERY.getValue()), Double.parseDouble(CommissionType.DELIVERY_SUPPORT.getValue()), Double.parseDouble(CommissionType.DISCOUNT_SUPPORT.getValue()), Double.parseDouble(CommissionType.MEDIUM_COMPANY_COST_REFUND.getValue()), Double.parseDouble(CommissionType.ETC.getValue()));
+                CostAndCommissionDto costAndCommissionDto = calculateService.getCommission(commissionPolicy, o.getTotalPrice());
+                log.info("======================process 7======================");
+                calculateService.makeCalculate(costAndCommissionDto.getCost(), costAndCommissionDto.getCommissionList());
+                log.info("======================process 8======================");
                 //TODO: (1)통합 테스트 진행시 주석 해제, 주문의 상태를 정산완료로 수정
-//                orderKafkaProducer.sendOrderStatus("order-id-topic", o.getId());
+                orderKafkaProducer.sendOrderStatus("order-id-topic", o.getId());
+                log.info("======================process 9======================");
             }
             System.out.println("====================== writer end============================");
 //            productBackupRepository.saveAll(items);

@@ -13,6 +13,7 @@ import shop.kokodo.calculateservice.repository.calculate.CalculateRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 import static shop.kokodo.calculateservice.factory.entity.CalculateFactory.createCalculate;
 
@@ -49,7 +50,9 @@ class CalculateRepositoryTest {
         calculateRepository.save(calculate);
         clear();
 //        //then
-        List<Calculate> findCalculate = calculateRepository.findBySellerId(1L).orElseThrow(CalculateNotFoundException::new);
+
+        List<Calculate> findCalculate = Optional.ofNullable(calculateRepository.findBySellerId(1L)).orElseThrow(CalculateNotFoundException::new);
+
         Assertions.assertThat(findCalculate.get(0).getId()).isEqualTo(1);
     }
 

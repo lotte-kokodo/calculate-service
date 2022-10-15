@@ -26,27 +26,28 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/calculate")
 public class CalculateController {
 
     private final CalculateService calculateService;
 
-    @GetMapping("/calculate/{id}/expectDay")
+    @GetMapping("/expectDay")
     public Response expectDay() {
         LocalDateTime expectDay = calculateService.getExpectDay();
-        System.out.println("date in expectDay");
+        log.info("date in expectDay");
         return Response.success(expectDay);
     }
 
-    @GetMapping("/calculate/{id}/expectMoney")
+    @GetMapping("/{id}/expectMoney")
     public Response expectMoney(@PathVariable("id") Long id) {
         Long expectMoney = calculateService.getExpectMoney(id);
-        System.out.println("date in expectMoney");
+        log.info("date in expectMoney");
         return Response.success(expectMoney);
     }
 
-    @PostMapping("/calculate/{id}/calculateList")
+    @PostMapping("/{id}/calculateList")
     public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition) {
-        System.out.println("calculateSearchCondition = " + calculateSearchCondition);
+        log.info("calculateSearchCondition = " + calculateSearchCondition);
         List<CalculateDto> calculateList = calculateService.getCalculateList(calculateSearchCondition);
         return Response.success(calculateList);
     }
