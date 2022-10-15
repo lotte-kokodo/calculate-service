@@ -170,17 +170,15 @@ public class CalculateStepConfiguration {
     public ItemWriter<Order> calculateWriter(
             @Value("#{stepExecutionContext[minId]}") Long minId,
             @Value("#{stepExecutionContext[maxId]}") Long maxId) {
-//        log.info("================================================CalculateWriter Point================================================");
         return items -> {
             System.out.println("====================== writer start============================");
             for (Order o : items) {
                 log.info("======================process 1======================");
                 //TODO: (1)통합 테스트 진행시 주석 해제
                 List<Long> sellerId = productService.getSellerId(o.getId());
-//                Long sellerId = 1L;
                 log.info("======================process 5======================");
-//                TODO: (1)통합 테스트시 주석해제
-                //sellerId와 commissionPolicy의 idx 관계는 절대적으로 지켜져야한다 예를 들어 sellerId(0)번째의 수수료는 commissionPolicy(0)번째이다. sellerId(0)일 경우 commissionPolicy(1)이면 안된다.
+////                TODO: (1)통합 테스트시 주석해제
+//                sellerId와 commissionPolicy의 idx 관계는 절대적으로 지켜져야한다 예를 들어 sellerId(0)번째의 수수료는 commissionPolicy(0)번째이다. sellerId(0)일 경우 commissionPolicy(1)이면 안된다.
                 List<CommissionPolicyDto> commissionPolicy = sellerService.findCommissionPolicy(sellerId);
                 log.info("======================process 6======================");
 //                CommissionPolicyDto commissionPolicy = new CommissionPolicyDto(1L, Double.parseDouble(CommissionType.BASIC.getValue()), Double.parseDouble(CommissionType.SALES_PROMOTION.getValue()), Double.parseDouble(CommissionType.FIRST_PAYMENT_DELIVERY.getValue()), Double.parseDouble(CommissionType.DELIVERY_SUPPORT.getValue()), Double.parseDouble(CommissionType.DISCOUNT_SUPPORT.getValue()), Double.parseDouble(CommissionType.MEDIUM_COMPANY_COST_REFUND.getValue()), Double.parseDouble(CommissionType.ETC.getValue()));
@@ -188,12 +186,11 @@ public class CalculateStepConfiguration {
                 log.info("======================process 7======================");
                 calculateService.makeCalculate(costAndCommissionDto.getCost(), costAndCommissionDto.getCommissionList());
                 log.info("======================process 8======================");
-                //TODO: (1)통합 테스트 진행시 주석 해제, 주문의 상태를 정산완료로 수정
-                orderKafkaProducer.sendOrderStatus("order-id-topic", o.getId());
+//                //TODO: (1)통합 테스트 진행시 주석 해제, 주문의 상태를 정산완료로 수정
+//                orderKafkaProducer.sendOrderStatus("order-id-topic", o.getId());
                 log.info("======================process 9======================");
             }
             System.out.println("====================== writer end============================");
-//            productBackupRepository.saveAll(items);
         };
     }
 

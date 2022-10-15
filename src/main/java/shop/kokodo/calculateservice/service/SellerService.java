@@ -30,7 +30,7 @@ public class SellerService {
 
     private final SellerServiceClient sellerServiceClient;
     private final CircuitBreakerFactory circuitBreakerFactory;
->
+
     public List<CommissionPolicyDto> findCommissionPolicy(List<Long> sellerId){
         CircuitBreaker sellerCircuitBreaker = circuitBreakerFactory.create("sellerCircuitBreaker");
         Response sellerCommissionPolicyResponse = sellerCircuitBreaker.run(() -> sellerServiceClient.getSellerCommissionPolicy(sellerId)

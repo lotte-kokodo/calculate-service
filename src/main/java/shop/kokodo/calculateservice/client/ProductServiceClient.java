@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import shop.kokodo.calculateservice.dto.response.Response;
 
 import java.util.List;
@@ -22,6 +23,6 @@ import java.util.List;
  */
 @FeignClient(name = "product-service")
 public interface ProductServiceClient {
-    @GetMapping("/product-service/productSellerId")
-    Response getProductSellerId(@RequestBody List<Long> productId);
+    @GetMapping("/product/productSellerId")
+    List<Long> getProductSellerId(@RequestParam List<Long> productId);
 }
