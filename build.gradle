@@ -77,8 +77,6 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     //kafka
     implementation 'org.springframework.kafka:spring-kafka'
-// https://mvnrepository.com/artifact/com.google.guava/guava
-    implementation group: 'com.google.guava', name: 'guava', version: 'r05'
 
 }
 

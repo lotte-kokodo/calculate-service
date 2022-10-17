@@ -15,9 +15,10 @@ import lombok.*;
  * 2022/09/26        namhyeop       최초 생성
  */
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
+@ToString
 public class CommissionPolicyDto {
 
     private Long sellerId;
