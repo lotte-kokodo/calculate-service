@@ -5,9 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.calculateservice.dto.CalculateDto;
 import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
+import shop.kokodo.calculateservice.dto.SaleListDto;
 import shop.kokodo.calculateservice.dto.SaleListSearchCondition;
 import shop.kokodo.calculateservice.dto.response.Response;
 import shop.kokodo.calculateservice.service.CalculateService;
+import shop.kokodo.calculateservice.service.CommissionService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,29 +29,15 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/calculate")
-public class CalculateController {
+@RequestMapping("/commission")
+public class CommissionController {
 
-    private final CalculateService calculateService;
+    private final CommissionService commissionService;
 
-    @GetMapping("/expectDay")
-    public Response expectDay() {
-        LocalDateTime expectDay = calculateService.getExpectDay();
-        log.info("date in expectDay");
-        return Response.success(expectDay);
-    }
-
-    @GetMapping("/{id}/expectMoney")
-    public Response expectMoney(@PathVariable("id") Long id) {
-        Long expectMoney = calculateService.getExpectMoney(id);
-        log.info("date in expectMoney");
-        return Response.success(expectMoney);
-    }
-
-    @PostMapping("/{id}/calculateList")
-    public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition) {
-        log.info("calculateSearchCondition = " + calculateSearchCondition);
-        List<CalculateDto> calculateList = calculateService.getCalculateList(calculateSearchCondition);
-        return Response.success(calculateList);
+    @PostMapping("/saleList")
+    public Response saleList(@RequestBody SaleListSearchCondition saleListSearchCondition){
+        log.info("SaleListSearchCondition = " + saleListSearchCondition);
+        List<SaleListDto> saleList = commissionService.getSaleList(saleListSearchCondition);
+        return  Response.success(saleList);
     }
 }

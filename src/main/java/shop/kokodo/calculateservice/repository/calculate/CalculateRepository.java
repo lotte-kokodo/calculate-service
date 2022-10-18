@@ -21,4 +21,5 @@ import java.util.Optional;
 public interface CalculateRepository extends JpaRepository<Calculate, Long>, CalculateRepositoryCustom {
 
     List<Calculate> findBySellerId(@Param("id") Long id);
+
 }

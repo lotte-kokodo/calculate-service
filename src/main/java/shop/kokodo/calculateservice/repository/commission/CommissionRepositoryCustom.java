@@ -1,4 +1,4 @@
-package shop.kokodo.calculateservice.repository.calculate;
+package shop.kokodo.calculateservice.repository.commission;
 
 import shop.kokodo.calculateservice.dto.CalculateDto;
 import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
@@ -18,8 +18,7 @@ import java.util.List;
  * -----------------------------------------------------------
  * 2022/10/06        namhyeop       최초 생성
  */
-public interface CalculateRepositoryCustom {
+public interface CommissionRepositoryCustom {
 
-    List<CalculateDto> searchCalculate(CalculateSearchCondition condition);
-
+    List<SaleListDto> searchSaleList(SaleListSearchCondition condition);
 }
