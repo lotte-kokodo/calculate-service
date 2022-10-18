@@ -23,11 +23,12 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+//@ToString
 @Builder
 public class Calculate extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "calculate_id")
     private Long id;
 
@@ -62,6 +63,7 @@ public class Calculate extends BaseEntity {
     }
 
     public static Calculate createCalculate(Commission commission, Long cost) {
+        System.out.println("commission = " + commission);
         Calculate calculate = Calculate.builder()
                 .commission(commission)
                 .calculateType(CalculateType.MAIN_CALCULATE)
@@ -84,18 +86,4 @@ public class Calculate extends BaseEntity {
         this.finalPaymentCost = finalPaymentCost;
         this.sellerId = sellerId;
     }
-
-//    @Override
-//    public String toString() {
-//        return "Calculate{" +
-//                "id=" + id +
-//                ", commission=" + "[blank]" +
-//                ", calculateType=" + calculateType +
-//                ", supportRate='" + supportRate + '\'' +
-//                ", provideStatus=" + provideStatus +
-//                ", withdrawalMethod=" + withdrawalMethod +
-//                ", finalPaymentCost=" + finalPaymentCost +
-//                ", sellerId=" + sellerId +
-//                '}';
-//    }
 }

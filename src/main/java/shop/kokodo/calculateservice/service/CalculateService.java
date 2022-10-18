@@ -1,12 +1,10 @@
 package shop.kokodo.calculateservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.kokodo.calculateservice.dto.CalculateDto;
-import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
-import shop.kokodo.calculateservice.dto.CommissionPolicyDto;
-import shop.kokodo.calculateservice.dto.CostAndCommissionDto;
+import shop.kokodo.calculateservice.dto.*;
 import shop.kokodo.calculateservice.entity.Calculate;
 import shop.kokodo.calculateservice.entity.Commission;
 import shop.kokodo.calculateservice.exception.CalculateListNotFoundException;
@@ -33,6 +31,7 @@ import static shop.kokodo.calculateservice.entity.Commission.createCommission;
  * -----------------------------------------------------------
  * 2022/09/30        namhyeop       최초 생성
  */
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -105,7 +104,10 @@ public class CalculateService {
         int totalCount = costList.size();
         List<Calculate> calculates = new ArrayList<>();
         for(int i = 0; i < totalCount; i++){
-            calculates.add(Calculate.createCalculate(commissionList.get(i), costList.get(i)));
+            System.out.println(commissionList.get(i));
+            System.out.println(costList.get(i));
+            Calculate calculate = Calculate.createCalculate(commissionList.get(i), costList.get(i));
+            calculates.add(calculate);
         }
         calculateRepository.saveAll(calculates);
     }

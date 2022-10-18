@@ -15,7 +15,7 @@ import shop.kokodo.calculateservice.entity.Commission;
  * -----------------------------------------------------------
  * 2022/09/27        namhyeop       최초 생성
  */
-public interface CommissionRepository extends JpaRepository<Commission, Long> {
+public interface CommissionRepository extends JpaRepository<Commission, Long>, CommissionRepositoryCustom {
 
     Commission findBySellerId(Long sellerId);
 

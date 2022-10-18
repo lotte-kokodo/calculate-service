@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class CalculateDto {
 
     private LocalDateTime date;

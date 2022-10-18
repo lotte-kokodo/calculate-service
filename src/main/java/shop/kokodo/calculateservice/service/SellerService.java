@@ -11,6 +11,7 @@ import shop.kokodo.calculateservice.dto.response.Response;
 import shop.kokodo.calculateservice.dto.response.Result;
 import shop.kokodo.calculateservice.entity.Commission;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,10 +34,8 @@ public class SellerService {
 
     public List<CommissionPolicyDto> findCommissionPolicy(List<Long> sellerId){
         CircuitBreaker sellerCircuitBreaker = circuitBreakerFactory.create("sellerCircuitBreaker");
-        Response sellerCommissionPolicyResponse = sellerCircuitBreaker.run(() -> sellerServiceClient.getSellerCommissionPolicy(sellerId)
-                , throwable -> Response.failure(500, "sellerServer 응답이 실패하였습니다."));
-        List<CommissionPolicyDto> result = (List<CommissionPolicyDto>)sellerCommissionPolicyResponse.getResult();
-
-        return result;
+        List<CommissionPolicyDto> sellerCommissionPolicyList = sellerCircuitBreaker.run(() -> sellerServiceClient.getSellerCommissionPolicy(sellerId)
+                , throwable -> new ArrayList<>());
+        return sellerCommissionPolicyList;
     }
 }
