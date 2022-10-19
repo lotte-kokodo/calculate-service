@@ -3,6 +3,7 @@ package shop.kokodo.calculateservice.repository.commission;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import shop.kokodo.calculateservice.dto.*;
+import shop.kokodo.calculateservice.entity.Commission;
 import shop.kokodo.calculateservice.enums.calculate.CalculateType;
 import shop.kokodo.calculateservice.enums.calculate.ProvideStatus;
 import shop.kokodo.calculateservice.repository.calculate.CalculateRepositoryCustom;
@@ -43,8 +44,11 @@ public class CommissionRepositoryImpl implements CommissionRepositoryCustom {
                         commission.salesPromotion,
                         commission.firstPaymentDelivery,
                         commission.deliverySupport,
+                        commission.discountSupport,
                         commission.mediumCompanyCostRefund,
-                        commission.etc
+                        commission.etc,
+                        commission.calculate.calculateType,
+                        commission.calculate.finalPaymentCost
                 ))
                 .from(commission)
                 .where(
