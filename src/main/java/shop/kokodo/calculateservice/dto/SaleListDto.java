@@ -2,6 +2,7 @@ package shop.kokodo.calculateservice.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
+import shop.kokodo.calculateservice.enums.calculate.CalculateType;
 
 /**
  * packageName    : shop.kokodo.calculateservice.repository.calculate
@@ -23,19 +24,27 @@ public class SaleListDto {
     private Long sellerId;
     private Long basic;
     private Long salesPromotion;
-    private Long first_payment_delivery;
-    private Long delivery_support;
-    private Long medium_company_cost_refund;
+    private Long firstPaymentDelivery;
+    private Long deliverySupport;
+    private Long discountSupport;
+    private Long mediumCompanyCostRefund;
     private Long etc;
 
+    private CalculateType calculateType;
+    private Long finalPaymentCost;
+
     @QueryProjection
-    public SaleListDto(Long sellerId, Long basic, Long salesPromotion, Long first_payment_delivery, Long delivery_support, Long medium_company_cost_refund, Long etc) {
+    public SaleListDto(Long sellerId, Long basic, Long salesPromotion, Long first_paymentDelivery, Long deliverySupport, Long discountSupport, Long mediumCompanyCostRefund, Long etc, CalculateType calculateType, Long finalPaymentCost) {
         this.sellerId = sellerId;
         this.basic = basic;
         this.salesPromotion = salesPromotion;
-        this.first_payment_delivery = first_payment_delivery;
-        this.delivery_support = delivery_support;
-        this.medium_company_cost_refund = medium_company_cost_refund;
+        this.firstPaymentDelivery = first_paymentDelivery;
+        this.deliverySupport = deliverySupport;
+        this.discountSupport = discountSupport;
+        this.mediumCompanyCostRefund = mediumCompanyCostRefund;
         this.etc = etc;
+
+        this.calculateType = calculateType;
+        this.finalPaymentCost = finalPaymentCost;
     }
 }
