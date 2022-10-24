@@ -31,24 +31,24 @@ public class Order extends BaseEntity {
     @Column(name = "order_id")
     private Long id;
 
-    private Long userId;
+    private Long memberId;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    private String deliveryName;
+    private String deliveryMemberName;
 
-    private String deliveryAddress;
+    private String deliveryMemberAddress;
 
     private Long totalPrice;
 
     private LocalDateTime orderDate;
 
-    public Order(Long userId, OrderStatus orderStatus, String deliveryName, String deliveryAddress, Long totalPrice, LocalDateTime orderDate) {
-        this.userId = userId;
+    public Order(Long memberId, OrderStatus orderStatus, String deliveryMemberName, String deliveryMemberAddress, Long totalPrice, LocalDateTime orderDate) {
+        this.memberId = memberId;
         this.orderStatus = orderStatus;
-        this.deliveryName = deliveryName;
-        this.deliveryAddress = deliveryAddress;
+        this.deliveryMemberName = deliveryMemberName;
+        this.deliveryMemberAddress = deliveryMemberAddress;
         this.totalPrice = totalPrice;
         this.orderDate = orderDate;
     }
