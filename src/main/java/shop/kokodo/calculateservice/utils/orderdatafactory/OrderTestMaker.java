@@ -17,13 +17,13 @@ import java.util.ArrayList;
 public class OrderTestMaker {
     public static void main(String[] args) {
         String tableName = "orders";
-        String column = "order_id, user_id, order_status, delivery_name, delivery_address,total_price, order_date";
+        String column = "order_id, member_id, order_status, delivery_member_name, delivery_member_address,total_price, order_date";
 //        String column = "\'order_id\', \'user_id\', \'order_status\', \'delivery_name\', \'delivery_address\',\'total_price\', \'order_date\'";
         //3개
         ArrayList<String> atb3 = new ArrayList<>();
         atb3.add("ORDER_SUCCESS");
         atb3.add("PURCHASE_CONFIRM");
-        atb3.add("REFUND_PROCESS");
+//        atb3.add("REFUND_PROCESS");
 
         //10개
         ArrayList<String> atb4 = new ArrayList<>();

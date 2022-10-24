@@ -16,10 +16,7 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import shop.kokodo.calculateservice.dto.CommissionPolicyDto;
 import shop.kokodo.calculateservice.dto.CostAndCommissionDto;
-import shop.kokodo.calculateservice.entity.Calculate;
-import shop.kokodo.calculateservice.entity.Commission;
 import shop.kokodo.calculateservice.entity.Order;
-import shop.kokodo.calculateservice.enums.calculate.CommissionType;
 import shop.kokodo.calculateservice.messagequeue.OrderKafkaProducer;
 import shop.kokodo.calculateservice.partition.OrderIdRangePartitioner;
 import shop.kokodo.calculateservice.repository.order.OrderRepository;
@@ -50,7 +47,6 @@ import java.util.Map;
  * 변경 사항
  * 1.AsynceItemProcessor를 사용할 것인가?
  * 2.따로 정의한 Partioner를 사용할 것인가 말것인가
- * 2-1.Spring Batch에서 제공하는 interface를 사용자 정의하여 나만의 Partioner를 구축하고 싶었으나 역량 부족으로 실패
  * 3.주문 데이터가 없을 경우 Partioning 예외처리 진행해줘야함
  */
 @Slf4j
