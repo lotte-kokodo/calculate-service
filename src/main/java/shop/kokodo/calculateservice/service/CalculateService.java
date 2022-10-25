@@ -78,7 +78,7 @@ public class CalculateService {
 
     public LocalDateTime getExpectDay() {
 
-        LocalDateTime friDay = LocalDateTime.of(2022, 9, 30, 0, 0);
+        LocalDateTime friDay = LocalDateTime.of(2022, 9, 30, 12, 0);
         LocalDateTime now = LocalDateTime.now();
 
         while (now.compareTo(friDay) > 0) {

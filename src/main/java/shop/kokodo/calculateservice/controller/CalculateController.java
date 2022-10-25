@@ -48,7 +48,6 @@ public class CalculateController {
 
     @PostMapping("/{id}/calculateList")
     public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition) {
-        log.info("calculateSearchCondition = " + calculateSearchCondition);
         List<CalculateDto> calculateList = calculateService.getCalculateList(calculateSearchCondition);
         return Response.success(calculateList);
     }

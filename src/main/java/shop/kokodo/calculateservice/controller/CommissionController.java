@@ -2,16 +2,15 @@ package shop.kokodo.calculateservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-import shop.kokodo.calculateservice.dto.CalculateDto;
-import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import shop.kokodo.calculateservice.dto.SaleListDto;
 import shop.kokodo.calculateservice.dto.SaleListSearchCondition;
 import shop.kokodo.calculateservice.dto.response.Response;
-import shop.kokodo.calculateservice.service.CalculateService;
 import shop.kokodo.calculateservice.service.CommissionService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -40,4 +39,5 @@ public class CommissionController {
         List<SaleListDto> saleList = commissionService.getSaleList(saleListSearchCondition);
         return  Response.success(saleList);
     }
+
 }
