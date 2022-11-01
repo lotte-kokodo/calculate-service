@@ -1,21 +1,17 @@
 package shop.kokodo.calculateservice.repository.interfaces;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import shop.kokodo.calculateservice.TestContext;
 import shop.kokodo.calculateservice.entity.Calculate;
 import shop.kokodo.calculateservice.exception.CalculateNotFoundException;
 import shop.kokodo.calculateservice.repository.calculate.CalculateRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
-import java.util.Optional;
 
-import static shop.kokodo.calculateservice.factory.entity.CalculateFactory.createCalculate;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * packageName    : shop.kokodo.calculateservice.repository.interfaces
@@ -29,35 +25,32 @@ import static shop.kokodo.calculateservice.factory.entity.CalculateFactory.creat
  * 2022/10/05        namhyeop       최초 생성
  */
 @SpringBootTest
-@Transactional
-class CalculateRepositoryTest {
+class CalculateRepositoryTest extends TestContext {
 
     @Autowired
     CalculateRepository calculateRepository;
-    @PersistenceContext
-    EntityManager em;
 
-    @BeforeEach
-    public void beforEach() {
-        calculateRepository.deleteAll();
-    }
-
+    @DisplayName("정산 예정 금액 테스트")
     @Test
     public void checkExpectMoney() throws Exception {
+        List<Calculate> findCalculate = calculateRepository.findBySellerId(1L);
+        assertThat(findCalculate.get(0).getId()).isEqualTo(1L);
+    }
+
+    @DisplayName("정산 리스트를 찾을 수 없는 경우 예외 테스트")
+    @Test
+    public void checkFailExpectMoney() throws Exception {
         //given
-        Calculate calculate = createCalculate();
-//        //when
-        calculateRepository.save(calculate);
-        clear();
-//        //then
+        //then
+        CalculateNotFoundException calculateNotFoundException = null;
 
-        List<Calculate> findCalculate = Optional.ofNullable(calculateRepository.findBySellerId(1L)).orElseThrow(CalculateNotFoundException::new);
+        List<Calculate> calculateList = calculateRepository.findBySellerId(4L);
 
-        Assertions.assertThat(findCalculate.get(0).getId()).isEqualTo(1);
+        if (calculateList.isEmpty()){
+            calculateNotFoundException = new CalculateNotFoundException("정산 리스트를 찾을 수 없습니다.");
+        }
+
+        assertThat(calculateNotFoundException == null ? false : true).isTrue();
     }
 
-    void clear() {
-        em.flush();
-        em.clear();
-    }
 }

@@ -1,7 +1,7 @@
 package shop.kokodo.calculateservice.enums.config;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 import shop.kokodo.calculateservice.dto.EnumValue;
 import shop.kokodo.calculateservice.enums.EnumMapper;
 import shop.kokodo.calculateservice.enums.EnumType;
@@ -29,9 +29,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  * -----------------------------------------------------------
  * 2022/09/27        namhyeop       최초 생성
  */
-@SpringBootTest
+
 class EnumMapperConfigTest {
 
+    @DisplayName("EnumType 테스트 - 주문 상태")
     @Test
     public void checkEnumModelType() throws Exception {
         List<EnumType> enumTypes = new ArrayList<>();
@@ -45,6 +46,7 @@ class EnumMapperConfigTest {
         assertThat(enumTypes.get(2).getValue()).isEqualTo("환불 진행");
     }
 
+    @DisplayName("EnumType 테스트 - 정산 타입")
     @Test
     public void CalculateTypeEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();
@@ -57,6 +59,7 @@ class EnumMapperConfigTest {
         assertThat(calculateTypeList.get(1).getValue()).isEqualTo("주정산");
     }
 
+    @DisplayName("EnumType 테스트 - 수수료 타입")
     @Test
     public void CommissionTypeEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();
@@ -73,6 +76,7 @@ class EnumMapperConfigTest {
         assertThat(commissionList.get(5).getValue()).isEqualTo("0");
     }
 
+    @DisplayName("EnumType 테스트 - 제공 상태")
     @Test
     public void provideStatusEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();
@@ -87,6 +91,7 @@ class EnumMapperConfigTest {
         assertThat(provideStatusList.get(3).getValue()).isEqualTo("지급보류");
     }
 
+    @DisplayName("EnumType 테스트 - 출금방식")
     @Test
     public void withdrawalEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();
@@ -101,6 +106,7 @@ class EnumMapperConfigTest {
         assertThat(WithdrawalMethodLIst.get(3).getValue()).isEqualTo("셀러머니전환");
     }
 
+    @DisplayName("EnumType 테스트 - 주문 상태")
     @Test
     public void OrderStatusEnumMakeValeTest() throws Exception {
         EnumMapper enumMapper = new EnumMapper();

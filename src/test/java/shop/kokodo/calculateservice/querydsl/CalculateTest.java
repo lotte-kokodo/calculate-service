@@ -1,20 +1,16 @@
 package shop.kokodo.calculateservice.querydsl;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import shop.kokodo.calculateservice.TestContext;
 import shop.kokodo.calculateservice.dto.CalculateDto;
 import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
-import shop.kokodo.calculateservice.entity.Calculate;
 import shop.kokodo.calculateservice.enums.calculate.CalculateType;
 import shop.kokodo.calculateservice.enums.calculate.ProvideStatus;
-import shop.kokodo.calculateservice.enums.calculate.WithdrawalMethod;
 import shop.kokodo.calculateservice.repository.calculate.CalculateRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,44 +28,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  * -----------------------------------------------------------
  * 2022/10/06        namhyeop       최초 생성
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
-public class CalculateTest {
-
-    @PersistenceContext
-    EntityManager em;
+@SpringBootTest
+public class CalculateTest extends TestContext {
 
     @Autowired
     CalculateRepository calculateRepository;
 
-    @BeforeEach
-    public void before(){
-        calculateRepository.deleteAll();
-    }
-
+    @DisplayName("동적 쿼리를 통한 정산 내역 조회")
     @Test
     public void calculateSearch() throws Exception {
-        //given
-        Calculate calculate1 = Calculate.builder()
-                .calculateType(CalculateType.MAIN_CALCULATE)
-                .supportRate("100%")
-                .provideStatus(ProvideStatus.PROVIDE_SUCCESS)
-                .withdrawalMethod(WithdrawalMethod.REGULAR_WITHDRAWAL)
-                .sellerId(1L)
-                .finalPaymentCost(1000L)
-                .build();
-        Calculate saveCalculate1 = calculateRepository.save(calculate1);
-
-        Calculate calculate2 = Calculate.builder()
-                .calculateType(CalculateType.MAIN_CALCULATE)
-                .supportRate("100%")
-                .provideStatus(ProvideStatus.PROVIDE_SUCCESS)
-                .withdrawalMethod(WithdrawalMethod.REGULAR_WITHDRAWAL)
-                .sellerId(1L)
-                .finalPaymentCost(2000L)
-                .build();
-        Calculate saveCalculate2 = calculateRepository.save(calculate2);
-
         CalculateSearchCondition calcuateSerachCondtion = new CalculateSearchCondition
                 (1L
                         , LocalDateTime.parse("2022-10-05T15:10:10")
@@ -77,20 +44,12 @@ public class CalculateTest {
                         , ProvideStatus.PROVIDE_SUCCESS
                         , CalculateType.MAIN_CALCULATE
                         , null);
-        clear();
+//        clear();
 
         List<CalculateDto> calculateDtos = calculateRepository.searchCalculate(calcuateSerachCondtion);
-        for (CalculateDto calculateDto : calculateDtos) {
-            System.out.println("calculateDto = " + calculateDto);
-        }
-        assertThat(calculateDtos.size()).isEqualTo(2);
+        assertThat(calculateDtos.size()).isEqualTo(1);
         //데이터 일치성 확인
-        assertThat(calculateDtos.get(0).getFinalPaymentCost()).isEqualTo(1000L);
-        assertThat(calculateDtos.get(1).getFinalPaymentCost()).isEqualTo(2000L);
-    }
-
-    public void clear() {
-        em.flush();
-        em.clear();
+        assertThat(calculateDtos.get(0).getFinalPaymentCost()).isEqualTo(10000L);
+        assertThat(calculateDtos.get(0).getType()).isEqualTo(CalculateType.MAIN_CALCULATE);
     }
 }

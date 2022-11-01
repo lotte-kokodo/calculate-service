@@ -1,9 +1,10 @@
 package shop.kokodo.calculateservice.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import shop.kokodo.calculateservice.dto.CommissionPolicyDto;
-import shop.kokodo.calculateservice.dto.response.Response;
+import shop.kokodo.calculateservice.dto.FinanceInfoDto;
 
 import java.util.List;
 
@@ -23,4 +24,7 @@ import java.util.List;
 public interface SellerServiceClient {
     @GetMapping("/seller/commissionPolicy")
     List<CommissionPolicyDto> getSellerCommissionPolicy(@RequestParam List<Long> sellerId);
+
+    @GetMapping("/sellerFinanceInfo/finance")
+    FinanceInfoDto getSellerFinanceInfo(@RequestParam Long sellerId);
 }

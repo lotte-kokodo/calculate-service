@@ -1,7 +1,5 @@
 package shop.kokodo.calculateservice.messagequeue;
 
-import com.fasterxml.jackson.datatype.jdk8.StreamSerializer;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;

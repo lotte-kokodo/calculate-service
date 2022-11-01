@@ -17,7 +17,6 @@ import shop.kokodo.calculateservice.enums.calculate.CalculateType;
  */
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 @ToString
 public class SaleListDto {
 
@@ -29,22 +28,48 @@ public class SaleListDto {
     private Long discountSupport;
     private Long mediumCompanyCostRefund;
     private Long etc;
-
     private CalculateType calculateType;
     private Long finalPaymentCost;
 
+
+    private Long saleSum;
+    private Long saleCommission;
+    private Long settlementMoney;
+    private Long sum;
+
     @QueryProjection
-    public SaleListDto(Long sellerId, Long basic, Long salesPromotion, Long first_paymentDelivery, Long deliverySupport, Long discountSupport, Long mediumCompanyCostRefund, Long etc, CalculateType calculateType, Long finalPaymentCost) {
+    public SaleListDto(Long sellerId, Long basic, Long salesPromotion, Long firstPaymentDelivery, Long deliverySupport, Long discountSupport, Long mediumCompanyCostRefund, Long etc, CalculateType calculateType, Long finalPaymentCost) {
         this.sellerId = sellerId;
         this.basic = basic;
         this.salesPromotion = salesPromotion;
-        this.firstPaymentDelivery = first_paymentDelivery;
+        this.firstPaymentDelivery = firstPaymentDelivery;
         this.deliverySupport = deliverySupport;
         this.discountSupport = discountSupport;
         this.mediumCompanyCostRefund = mediumCompanyCostRefund;
         this.etc = etc;
-
         this.calculateType = calculateType;
         this.finalPaymentCost = finalPaymentCost;
     }
+
+    public void setSaleListValue(Long saleSum, Long saleCommission, Long settlementMoney, Long sum) {
+        this.saleSum = saleSum;
+        this.saleCommission = saleCommission;
+        this.settlementMoney = settlementMoney;
+        this.sum = sum;
+    }
+
+//    @QueryProjection
+//    public SaleListDto(Long sellerId, Long basic, Long salesPromotion, Long first_paymentDelivery, Long deliverySupport, Long discountSupport, Long mediumCompanyCostRefund, Long etc, CalculateType calculateType, Long finalPaymentCost) {
+//        this.sellerId = sellerId;
+//        this.basic = basic;
+//        this.salesPromotion = salesPromotion;
+//        this.firstPaymentDelivery = first_paymentDelivery;
+//        this.deliverySupport = deliverySupport;
+//        this.discountSupport = discountSupport;
+//        this.mediumCompanyCostRefund = mediumCompanyCostRefund;
+//        this.etc = etc;
+//
+//        this.calculateType = calculateType;
+//        this.finalPaymentCost = finalPaymentCost;
+//    }
 }

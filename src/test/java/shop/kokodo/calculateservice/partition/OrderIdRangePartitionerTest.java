@@ -1,11 +1,13 @@
 package shop.kokodo.calculateservice.partition;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.item.ExecutionContext;
+import shop.kokodo.calculateservice.TestContext;
 import shop.kokodo.calculateservice.repository.order.OrderRepository;
 
 import java.time.LocalDateTime;
@@ -27,12 +29,13 @@ import static org.mockito.ArgumentMatchers.any;
  * 2022/09/29        namhyeop       최초 생성
  */
 @ExtendWith(MockitoExtension.class)
-class OrderIdRangePartitionerTest {
+class OrderIdRangePartitionerTest extends TestContext {
     private static OrderIdRangePartitioner partitioner;
 
     @Mock
     private OrderRepository orderRepository;
 
+    @DisplayName("배치 파티셔닝 개수 테스트")
     @Test
     void checkedGridSize() throws Exception {
         //given

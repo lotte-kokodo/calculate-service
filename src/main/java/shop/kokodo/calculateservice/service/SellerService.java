@@ -7,9 +7,6 @@ import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 import shop.kokodo.calculateservice.client.SellerServiceClient;
 import shop.kokodo.calculateservice.dto.CommissionPolicyDto;
-import shop.kokodo.calculateservice.dto.response.Response;
-import shop.kokodo.calculateservice.dto.response.Result;
-import shop.kokodo.calculateservice.entity.Commission;
 
 import java.util.ArrayList;
 import java.util.List;

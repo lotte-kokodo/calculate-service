@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import shop.kokodo.calculateservice.entity.OrderProduct;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * packageName    : shop.kokodo.calculateservice.repository.interfaces

@@ -62,6 +62,10 @@ public class Calculate extends BaseEntity {
         commission.changeCalculate(this);
     }
 
+    public static Calculate createCalculate() {
+       return new Calculate();
+    }
+
     public static Calculate createCalculate(Commission commission, Long cost) {
         System.out.println("commission = " + commission);
         Calculate calculate = Calculate.builder()
@@ -78,6 +82,7 @@ public class Calculate extends BaseEntity {
     }
 
     public Calculate(Commission commission, CalculateType calculateType, String supportRate, ProvideStatus provideStatus, WithdrawalMethod withdrawalMethod, Long finalPaymentCost, Long sellerId) {
+        setCommission(commission);
         this.commission = commission;
         this.calculateType = calculateType;
         this.supportRate = supportRate;

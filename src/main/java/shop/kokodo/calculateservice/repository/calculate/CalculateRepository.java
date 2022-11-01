@@ -22,4 +22,6 @@ public interface CalculateRepository extends JpaRepository<Calculate, Long>, Cal
 
     List<Calculate> findBySellerId(@Param("id") Long id);
 
+
+    Optional<Calculate> findById(Long id);
 }

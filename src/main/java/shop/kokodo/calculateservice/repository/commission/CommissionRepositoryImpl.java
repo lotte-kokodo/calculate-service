@@ -2,17 +2,14 @@ package shop.kokodo.calculateservice.repository.commission;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import shop.kokodo.calculateservice.dto.*;
-import shop.kokodo.calculateservice.entity.Commission;
-import shop.kokodo.calculateservice.enums.calculate.CalculateType;
-import shop.kokodo.calculateservice.enums.calculate.ProvideStatus;
-import shop.kokodo.calculateservice.repository.calculate.CalculateRepositoryCustom;
+import shop.kokodo.calculateservice.dto.QSaleListDto;
+import shop.kokodo.calculateservice.dto.SaleListDto;
+import shop.kokodo.calculateservice.dto.SaleListSearchCondition;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static shop.kokodo.calculateservice.entity.QCalculate.calculate;
 import static shop.kokodo.calculateservice.entity.QCommission.commission;
 
 /**

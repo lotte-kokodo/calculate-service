@@ -3,7 +3,6 @@ package shop.kokodo.calculateservice.enums.order;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import shop.kokodo.calculateservice.enums.EnumType;
-import shop.kokodo.calculateservice.enums.calculate.CalculateType;
 
 /**
  * packageName    : shop.kokodo.calculateservice.enums
