@@ -2,7 +2,9 @@ package shop.kokodo.calculateservice.repository.calculate;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import shop.kokodo.calculateservice.dto.*;
+import shop.kokodo.calculateservice.dto.CalculateDto;
+import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
+import shop.kokodo.calculateservice.dto.QCalculateDto;
 import shop.kokodo.calculateservice.enums.calculate.CalculateType;
 import shop.kokodo.calculateservice.enums.calculate.ProvideStatus;
 
@@ -11,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static shop.kokodo.calculateservice.entity.QCalculate.calculate;
-import static shop.kokodo.calculateservice.entity.QCommission.commission;
 
 /**
  * packageName    : shop.kokodo.calculateservice.repository.impl
@@ -37,6 +38,7 @@ public class CalculateRepositoryImpl implements CalculateRepositoryCustom {
     public List<CalculateDto> searchCalculate(CalculateSearchCondition condition) {
         return queryFactory
                 .select(new QCalculateDto(
+                        calculate.id,
                         calculate.createdDate,
                         calculate.calculateType,
                         calculate.supportRate,

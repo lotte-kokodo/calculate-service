@@ -3,11 +3,9 @@ package shop.kokodo.calculateservice.repository.order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.calculateservice.entity.Order;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * packageName    : shop.kokodo.calculateservice.repository.interfaces

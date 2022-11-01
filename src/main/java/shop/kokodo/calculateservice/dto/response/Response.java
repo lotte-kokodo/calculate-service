@@ -1,7 +1,9 @@
 package shop.kokodo.calculateservice.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * packageName    : shop.kokodo.calculateservice.job

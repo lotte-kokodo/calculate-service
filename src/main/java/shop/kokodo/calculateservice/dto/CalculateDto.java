@@ -22,7 +22,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class CalculateDto {
+
+    private Long calculateId;
 
     private LocalDateTime date;
 
@@ -35,7 +38,8 @@ public class CalculateDto {
     private Long finalPaymentCost;
 
     @QueryProjection
-    public CalculateDto(LocalDateTime date, CalculateType type, String supportRate, ProvideStatus provideStatus, Long finalPaymentCost) {
+    public CalculateDto(Long calculateId, LocalDateTime date, CalculateType type, String supportRate, ProvideStatus provideStatus, Long finalPaymentCost) {
+        this.calculateId = calculateId;
         this.date = date;
         this.type = type;
         this.supportRate = supportRate;

@@ -2,8 +2,6 @@ package shop.kokodo.calculateservice.repository.calculate;
 
 import shop.kokodo.calculateservice.dto.CalculateDto;
 import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
-import shop.kokodo.calculateservice.dto.SaleListDto;
-import shop.kokodo.calculateservice.dto.SaleListSearchCondition;
 
 import java.util.List;
 

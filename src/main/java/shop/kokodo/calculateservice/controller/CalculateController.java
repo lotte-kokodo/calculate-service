@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.calculateservice.dto.CalculateDto;
+import shop.kokodo.calculateservice.dto.CalculateModalDto;
 import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
-import shop.kokodo.calculateservice.dto.SaleListSearchCondition;
 import shop.kokodo.calculateservice.dto.response.Response;
 import shop.kokodo.calculateservice.service.CalculateService;
 
@@ -50,5 +50,14 @@ public class CalculateController {
     public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition) {
         List<CalculateDto> calculateList = calculateService.getCalculateList(calculateSearchCondition);
         return Response.success(calculateList);
+    }
+
+    @GetMapping("/{sellerId}/calculateModal/{calculateId}")
+    public Response calculateModal(@PathVariable Long sellerId, @PathVariable Long calculateId){
+        log.info("sellerId {}", sellerId);
+        log.info("calculateId {}", calculateId);
+        CalculateModalDto calculateModal = calculateService.getCalculateModal(sellerId, calculateId);
+        log.info(calculateModal.getAccountHolder());
+        return Response.success(calculateModal);
     }
 }

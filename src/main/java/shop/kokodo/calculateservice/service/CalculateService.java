@@ -2,22 +2,24 @@ package shop.kokodo.calculateservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.kokodo.calculateservice.client.SellerServiceClient;
 import shop.kokodo.calculateservice.dto.*;
 import shop.kokodo.calculateservice.entity.Calculate;
 import shop.kokodo.calculateservice.entity.Commission;
 import shop.kokodo.calculateservice.exception.CalculateListNotFoundException;
 import shop.kokodo.calculateservice.exception.CalculateNotFoundException;
+import shop.kokodo.calculateservice.exception.SellerFinanceNotFoundException;
 import shop.kokodo.calculateservice.repository.calculate.CalculateRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 
+import static shop.kokodo.calculateservice.circuitbreaker.factory.AllCircuitBreaker.createSellerCircuitBreaker;
+import static shop.kokodo.calculateservice.entity.Calculate.createCalculate;
 import static shop.kokodo.calculateservice.entity.Commission.createCommission;
 
 /**
@@ -38,9 +40,11 @@ import static shop.kokodo.calculateservice.entity.Commission.createCommission;
 public class CalculateService {
 
     private final CalculateRepository calculateRepository;
+    private final SellerServiceClient sellerServiceClient;
+
     private final int weak = 7;
 
-    public CostAndCommissionDto getCommission(List<CommissionPolicyDto> commissionPolicyDtoList, Long money) {
+    public CostAndCommissionDto getCommission(List<CommissionPolicyDto> commissionPolicyDtoList, Integer money) {
         List<Long> retCostList = new ArrayList<>();
         List<Commission> retCommissionList = new ArrayList<>();
 
@@ -94,7 +98,11 @@ public class CalculateService {
             calculateSearchCondition.setProvideStatus(null);
         }
 
-        List<CalculateDto> calculateDto = Optional.ofNullable(calculateRepository.searchCalculate(calculateSearchCondition)).orElseThrow(CalculateListNotFoundException::new);
+        List<CalculateDto> calculateDto = calculateRepository.searchCalculate(calculateSearchCondition);
+
+        if(calculateDto == null){
+            throw new CalculateNotFoundException("calculateService - 정산 데이터를 찾을 수 없습니다.");
+        }
 
         return calculateDto;
     }
@@ -106,9 +114,26 @@ public class CalculateService {
         for(int i = 0; i < totalCount; i++){
             System.out.println(commissionList.get(i));
             System.out.println(costList.get(i));
-            Calculate calculate = Calculate.createCalculate(commissionList.get(i), costList.get(i));
+            Calculate calculate = createCalculate(commissionList.get(i), costList.get(i));
             calculates.add(calculate);
         }
         calculateRepository.saveAll(calculates);
+    }
+
+    public CalculateModalDto getCalculateModal(Long sellerId, Long calculateId){
+        Calculate calculate = calculateRepository.findById(calculateId).orElseThrow(CalculateListNotFoundException::new);
+
+        if(calculate == null){
+            throw new CalculateNotFoundException("calculateService - 정산 데이터를 찾을 수 없습니다.");
+        }
+
+        CircuitBreaker sellerCircuitBreaker = createSellerCircuitBreaker();
+        FinanceInfoDto sellerFinanceInfo = sellerCircuitBreaker.run(() ->sellerServiceClient.getSellerFinanceInfo(sellerId), throwable -> new FinanceInfoDto());
+
+        if (sellerFinanceInfo == null) {
+            throw new SellerFinanceNotFoundException("calculateService - Feign 통신으로부터 판매자 금융 정보를 찾을 수 없습니다.");
+        }
+
+        return CalculateModalDto.toDto(calculate, sellerFinanceInfo);
     }
 }

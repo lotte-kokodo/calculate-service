@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 /**
  * packageName    : shop.kokodo.calculateservice.entity
  * fileName       : OrderProduct
@@ -19,6 +21,7 @@ import javax.persistence.*;
  */
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -30,16 +33,32 @@ public class OrderProduct extends BaseEntity {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "order_id")
     private Order order;
 
     private Long memberId;
-
     private Long productId;
 
     private Integer qty;
-
     private Integer unitPrice;
 
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public OrderProduct(Order order, Long memberId, Long productId, Integer qty, Integer unitPrice) {
+        this.order = order;
+        this.memberId = memberId;
+        this.productId = productId;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
+    }
+
+    public OrderProduct(Long memberId, Long productId, Integer qty, Integer unitPrice) {
+        this.memberId = memberId;
+        this.productId = productId;
+        this.qty = qty;
+        this.unitPrice = unitPrice;
+    }
 }

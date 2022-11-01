@@ -2,15 +2,13 @@ package shop.kokodo.calculateservice.repository.interfaces;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import shop.kokodo.calculateservice.TestContext;
 import shop.kokodo.calculateservice.entity.Commission;
 import shop.kokodo.calculateservice.repository.commission.CommissionRepository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import static shop.kokodo.calculateservice.factory.entity.CommissionFactory.createCommission;
 
@@ -26,33 +24,22 @@ import static shop.kokodo.calculateservice.factory.entity.CommissionFactory.crea
  * -----------------------------------------------------------
  * 2022/10/04        namhyeop       최초 생성
  */
-@SpringBootTest
-@Transactional
-class CommissionRepositoryTest {
+@DataJpaTest
+class CommissionRepositoryTest extends TestContext {
 
     @Autowired
     CommissionRepository commissionRepository;
-
-    @PersistenceContext
-    EntityManager em;
+    Commission commission1;
 
     @BeforeEach
-    public void before(){
-        commissionRepository.deleteAll();
+    public void beforeEach() {
+        commission1 = commissionRepository.save(createCommission());
     }
 
+    @DisplayName("셀러 아이디를 사용한 수수료 조회")
     @Test
     public void findBySellerId() {
-        Commission commission = createCommission();
-        Commission saveCommission = commissionRepository.save(commission);
-        Commission findCommission = commissionRepository.findBySellerId(saveCommission.getSellerId());
-        clear();
-        Assertions.assertThat(commission).isEqualTo(saveCommission);
-        Assertions.assertThat(commission.getId()).isEqualTo(findCommission.getId());
-    }
-
-    void clear() {
-        em.flush();
-        em.clear();
+        Commission findCommission = commissionRepository.findBySellerId(commission1.getSellerId());
+        Assertions.assertThat(commission1.getId()).isEqualTo(findCommission.getId());
     }
 }
