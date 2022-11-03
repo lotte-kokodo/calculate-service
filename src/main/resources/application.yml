@@ -114,4 +114,4 @@ spring:
     password:
 
 kafka:
-  address:
+  address: 
