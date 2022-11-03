@@ -17,15 +17,91 @@ eureka:
 spring:
   application:
     name: calculate-service
-
   rabbitmq:
     host: rabbitmq
     port: 5672
     username: guest
     password: guest
+#  zipkin:
+#    base-url: http://127.0.0.1:9411
+#    enabled: true
+#  sleuth:
+#    sampler:
+#      probability: 1.0
+  profiles:
+    active: rds
+  batch:
+    job:
+      # qurtz ??? ?? ????? enabled? true? ????.
+      enabled: true
+      names: ${job.name:NONE}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+    #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+#    database-platform: org.hibernate.dialect.H2Dialect
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+    com.example.userservice.client: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, busrefresh, info, prometheus, metrics
+---
+spring:
+  config:
+    activate:
+      on-profile: h2
+  datasource:
+    url: jdbc:h2:./test
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:tcp://localhost/~/calculate
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mysql://localhost:3306/kokodo
+      username: root
+      password: 1234
+      driver-class-name: com.mysql.jdbc.Driver
+      maximum-pool-size: 200
+  #      connection-timeout: 3000
+  #      max-lifetime: 30000
+  batch:
+    jdbc:
+      initialize-schema: always
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: rds
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url:
@@ -36,8 +112,3 @@ spring:
         url:
     username:
     password:
-
-logging:
-  level:
-    org.hibernate.SQL: debug
-    org.hibernate.type: trace
