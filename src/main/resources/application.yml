@@ -112,3 +112,6 @@ spring:
         url:
     username:
     password:
+
+kafka:
+  address:
