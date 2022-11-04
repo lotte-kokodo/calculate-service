@@ -1,5 +1,6 @@
 = 정산 시스템 API 문서
 ifndef::snippets[]
+
 :snippets: ./build/generated-snippets
 
 endif::[]
