@@ -7,6 +7,11 @@ import shop.kokodo.calculateservice.enums.calculate.WithdrawalMethod;
 
 import javax.persistence.*;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+import static java.time.LocalDateTime.now;
+
 /**
  * packageName    : shop.kokodo.calculateservice.entity
  * fileName       : calculate
@@ -23,7 +28,6 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-//@ToString
 @Builder
 public class Calculate extends BaseEntity {
 
@@ -90,5 +94,18 @@ public class Calculate extends BaseEntity {
         this.withdrawalMethod = withdrawalMethod;
         this.finalPaymentCost = finalPaymentCost;
         this.sellerId = sellerId;
+    }
+
+    public Calculate(Commission commission, CalculateType calculateType, String supportRate, ProvideStatus provideStatus, WithdrawalMethod withdrawalMethod, Long finalPaymentCost, Long sellerId, LocalDateTime crateDate, LocalDateTime modifyDate) {
+        setCommission(commission);
+        this.commission = commission;
+        this.calculateType = calculateType;
+        this.supportRate = supportRate;
+        this.provideStatus = provideStatus;
+        this.withdrawalMethod = withdrawalMethod;
+        this.finalPaymentCost = finalPaymentCost;
+        this.sellerId = sellerId;
+        this.setCreatedDate(crateDate);
+        this.setLastModifiedDate(modifyDate);
     }
 }

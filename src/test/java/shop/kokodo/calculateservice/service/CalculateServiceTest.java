@@ -1,57 +1,103 @@
-//package shop.kokodo.calculateservice.service;
-//
-//
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import shop.kokodo.calculateservice.dto.CommissionPolicyDto;
-//import shop.kokodo.calculateservice.entity.Calculate;
-//import shop.kokodo.calculateservice.entity.Commission;
-//import shop.kokodo.calculateservice.entity.Order;
-//import shop.kokodo.calculateservice.enums.calculate.CommissionType;
-//import shop.kokodo.calculateservice.exception.CalculateNotFoundException;
-//import shop.kokodo.calculateservice.repository.calculate.CalculateRepository;
-//import shop.kokodo.calculateservice.repository.commission.CommissionRepository;
-//
-//import javax.persistence.EntityManager;
-//import javax.persistence.PersistenceContext;
-//import java.util.List;
-//import java.util.Map;
-//
-//import static org.assertj.core.api.Assertions.assertThat;
-//import static shop.kokodo.calculateservice.factory.entity.OrderFactory.createOrder;
-//
-///**
-// * packageName    : shop.kokodo.calculateservice.service
-// * fileName       : CalculateServiceTest
-// * author         : namhyeop
-// * date           : 2022/10/05
-// * description    :
-// * 정산시스템 로직 테스트
-// * ===========================================================
-// * DATE              AUTHOR             NOTE
-// * -----------------------------------------------------------
-// * 2022/10/05        namhyeop       최초 생성
-// */
-//@SpringBootTest
-//class CalculateServiceTest {
-//
-//    @PersistenceContext
-//    EntityManager em;
-//    @Autowired
-//    CalculateService calculateService;
-//    @Autowired
-//    CalculateRepository calculateRepository;
-//    @Autowired
-//    CommissionRepository commissionRepository;
-//
-//    @BeforeEach
-//    public void before() {
-//        commissionRepository.deleteAll();
-//        calculateRepository.deleteAll();
-//    }
-//
+package shop.kokodo.calculateservice.service;
+
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import shop.kokodo.calculateservice.entity.Calculate;
+import shop.kokodo.calculateservice.repository.calculate.CalculateRepository;
+import shop.kokodo.calculateservice.repository.commission.CommissionRepository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static shop.kokodo.calculateservice.factory.entity.OrderFactory.createOrder;
+
+/**
+ * packageName    : shop.kokodo.calculateservice.service
+ * fileName       : CalculateServiceTest
+ * author         : namhyeop
+ * date           : 2022/10/05
+ * description    :
+ * 정산시스템 로직 테스트
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2022/10/05        namhyeop       최초 생성
+ */
+@SpringBootTest
+class CalculateServiceTest {
+
+    @PersistenceContext
+    EntityManager em;
+    @Autowired
+    CalculateService calculateService;
+    @Autowired
+    CalculateRepository calculateRepository;
+    @Autowired
+    CommissionRepository commissionRepository;
+
+    @DisplayName("대시보드 카드 정보")
+    @Test
+    public void dashBoardExpectMoney(){
+        LocalDateTime today = LocalDateTime.of(2022, 11, 11, 00,00);
+        LocalDateTime toDayStartTime = today.minusDays(7);
+        Long sellerId = 1L;
+
+        List<Calculate> bySellerId = calculateRepository.findBySellerId(1L);
+        for (Calculate calculate : bySellerId) {
+            LocalDateTime createdDate = calculate.getCreatedDate();
+            System.out.println("createdDate = " + createdDate);
+            System.out.println("calculate = " + calculate);
+        }
+
+        Long weakExpectMoney = calculateRepository.findWeakExpectMoney(sellerId, toDayStartTime, today);
+        List<Calculate> sellerIdList = calculateRepository.findBySellerId(1L);
+        Long lastWeakExpectMoney = sellerIdList.get(3).getFinalPaymentCost() + sellerIdList.get(4).getFinalPaymentCost();
+
+        if (weakExpectMoney == null){
+            weakExpectMoney = 0L;
+        }
+
+        if (lastWeakExpectMoney == null){
+            lastWeakExpectMoney = 0L;
+        }
+
+        System.out.println("weakExpectMoney = " + weakExpectMoney);
+        System.out.println("lastWeakExpectMoney = " + lastWeakExpectMoney);
+
+        String percentInfo = "";
+        if(weakExpectMoney > lastWeakExpectMoney){
+            percentInfo += "^";
+        }else{
+            percentInfo += "v";
+        }
+
+        Long diffValue = Math.abs(weakExpectMoney - lastWeakExpectMoney);
+        long total = weakExpectMoney + lastWeakExpectMoney;
+        long weakExpectMoneyPer = (long)((double) weakExpectMoney / total * 100.0);
+        long lastWeakExpectMoneyPer = (long)((double)lastWeakExpectMoney / total * 100.0);
+        long percentDiff = Math.abs(weakExpectMoneyPer - lastWeakExpectMoneyPer);
+
+        percentInfo += diffValue + " ("+String.valueOf(percentDiff) + "%"+")";
+
+        System.out.println("total = " + total);
+        System.out.println("weakExpectMoneyPer = " + weakExpectMoneyPer);
+        System.out.println("lastWeakExpectMoneyPer = " + lastWeakExpectMoneyPer);
+        System.out.println("percentDiff = " + percentDiff);
+
+        Assertions.assertThat(77).isEqualTo((long)weakExpectMoneyPer);
+        Assertions.assertThat(22).isEqualTo((long)lastWeakExpectMoneyPer);
+        Assertions.assertThat(55).isEqualTo((long)percentDiff);
+
+        Assertions.assertThat(weakExpectMoney).isEqualTo(85000);
+        Assertions.assertThat(percentInfo).isEqualTo("^60000 (55%)");
+    }
 //    @Test
 //    public void beforeFetchClientCalculateTest() throws Exception {
 //        commissionRepository.deleteAllInBatch();
@@ -89,4 +135,4 @@
 //        assertThat(saveCalculate).isNotEqualTo(findCalculateList);
 //        assertThat(saveCommission).isNotEqualTo(findCommission);
 //    }
-//}
+}

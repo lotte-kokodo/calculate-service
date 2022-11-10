@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.calculateservice.client.ProductServiceClient;
 import shop.kokodo.calculateservice.exception.FeignClientFailException;
 import shop.kokodo.calculateservice.repository.orderproduct.OrderProductRepository;
@@ -27,6 +28,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class ProductService {
 
     private final OrderProductRepository orderProductRepository;

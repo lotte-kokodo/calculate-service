@@ -35,52 +35,6 @@ public abstract class DocumentConfiguration extends AcceptanceTest {
 
     public RequestSpecification spec;
 
-//    @BeforeEach
-//    void setUpRestDocs(RestDocumentationContextProvider restDocumentation) {
-//        this.spec = new RequestSpecBuilder()
-//                .addFilter(
-//                        documentationConfiguration(restDocumentation)
-//                                .snippets()
-//                                .withDefaults(
-//                                        curlRequest(),
-//                                        httpRequest(),
-//                                        httpResponse(),
-//                                        requestBody(),
-//                                        responseBody()
-//                                )
-//                )
-//                .build();
-//    }
-//
-//    protected Snippet simpleReadPathParameterSnippet() {
-//        return pathParameters(parameterWithName("id").description("아이디"));
-//    }
-//
-//    protected Snippet simpleRequestParameterSnippet() {
-//        return requestParameters(parameterWithName("name").description("이름"));
-//    }
-//
-//    protected Snippet simpleRequestBodySnippet() {
-//        return requestFields(
-//                fieldWithPath("name")
-//                        .type(JsonFieldType.STRING)
-//                        .description("이름")
-//
-//        );
-//    }
-//
-//    protected Snippet simpleResponseFieldsSnippet() {
-//        return responseFields(
-//                fieldWithPath("id")
-//                        .type(JsonFieldType.NUMBER)
-//                        .description("아이디"),
-//                fieldWithPath("name")
-//                        .type(JsonFieldType.STRING)
-//                        .description("이름")
-//        );
-//    }
-
-
     @BeforeEach
     void setUp(RestDocumentationContextProvider restDocumentation) {
         this.spec = new RequestSpecBuilder()

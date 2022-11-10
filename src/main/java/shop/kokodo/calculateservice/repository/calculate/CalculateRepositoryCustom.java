@@ -1,5 +1,7 @@
 package shop.kokodo.calculateservice.repository.calculate;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import shop.kokodo.calculateservice.dto.CalculateDto;
 import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
 
@@ -18,6 +20,6 @@ import java.util.List;
  */
 public interface CalculateRepositoryCustom {
 
-    List<CalculateDto> searchCalculate(CalculateSearchCondition condition);
+    Page<CalculateDto> searchCalculate(CalculateSearchCondition condition, Pageable pageable);
 
 }

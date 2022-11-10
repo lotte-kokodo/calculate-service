@@ -2,7 +2,10 @@ package shop.kokodo.calculateservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.calculateservice.dto.SaleListDto;
 import shop.kokodo.calculateservice.dto.SaleListSearchCondition;
 import shop.kokodo.calculateservice.repository.commission.CommissionRepository;
@@ -24,18 +27,19 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CommissionService {
 
     private final CommissionRepository commissionRepository;
 
-    public List<SaleListDto> getSaleList(SaleListSearchCondition saleListSearchCondition){
-        List<SaleListDto> saleListDtos = commissionRepository.searchSaleList(saleListSearchCondition);
+    public Page<SaleListDto> getSaleList(SaleListSearchCondition saleListSearchCondition, Pageable pageable){
+        Page<SaleListDto> saleListDtos = commissionRepository.searchSaleList(saleListSearchCondition, pageable);
         setSaleListValue(saleListDtos);
         log.info("saleListDtos = {}", saleListDtos);
         return saleListDtos;
     }
 
-    public void setSaleListValue(List<SaleListDto> saleList){
+    public void setSaleListValue(Page<SaleListDto> saleList){
         saleList.stream().forEach(saleListDto -> saleListDto.setSaleListValue(
                 getSaleSum(saleListDto),
                 getSaleCommission(saleListDto.getBasic(), saleListDto.getSalesPromotion(), saleListDto.getFirstPaymentDelivery(), saleListDto.getDeliverySupport(), saleListDto.getDiscountSupport(), saleListDto.getMediumCompanyCostRefund(), saleListDto.getEtc()),

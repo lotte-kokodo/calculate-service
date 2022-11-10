@@ -119,30 +119,4 @@ class CalculateControllerTest extends DocumentConfiguration {
         //then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
-//    @DisplayName("정산 리스트에서 모달 요청 테스트")
-//    @Test
-//    public void calculateModal() throws Exception{
-//        //given
-//        Map<String, Long> params = new HashMap<>();
-//        params.put("sellerId", 1L);
-//        params.put("calculateId", 1L);
-//
-////        RestDocumentationFilter restDocumentationFilter = document("calculate-modal", simpleReadPathParameterSnippet(), simpleRequestParameterSnippet(), simpleRequestBodySnippet(), simpleResponseFieldsSnippet());
-//        RestDocumentationFilter restDocumentationFilter = document("calculate-modal", simpleReadPathParameterSnippet(), simpleRequestBodySnippet(), simpleResponseFieldsSnippet());
-//
-//
-//        //when
-//        final ExtractableResponse<Response> response = RestAssured.
-//                given(spec).log().all()
-//                .filter(restDocumentationFilter)
-//                .body(params)
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                //when()절에서는 이제 어떠한 uri의 api를 호출할 것인지 지정, post,get,put 이 예시이다.
-//                .when().get("/calculate/" + params.get("sellerId") + "/calculate/calculateModal/" + params.get("calculateId"))
-//                //http body 로그 출력
-//                .then().log().all().extract();
-//
-//        //then
-//        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-//    }
 }
