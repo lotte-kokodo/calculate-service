@@ -22,7 +22,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@ToString
+//@ToString
 public class Commission extends BaseEntity {
 
     @Id

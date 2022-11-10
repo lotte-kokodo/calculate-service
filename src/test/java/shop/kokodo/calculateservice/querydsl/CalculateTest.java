@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import shop.kokodo.calculateservice.TestContext;
 import shop.kokodo.calculateservice.dto.CalculateDto;
 import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
@@ -45,11 +47,10 @@ public class CalculateTest extends TestContext {
                         , CalculateType.MAIN_CALCULATE
                         , null);
 //        clear();
-
-        List<CalculateDto> calculateDtos = calculateRepository.searchCalculate(calcuateSerachCondtion);
-        assertThat(calculateDtos.size()).isEqualTo(1);
+        PageRequest pageRequest = PageRequest.of(0, 2);
+        Page<CalculateDto> calculateDtos = calculateRepository.searchCalculate(calcuateSerachCondtion, pageRequest);
+        assertThat(calculateDtos.getSize()).isEqualTo(2);
         //데이터 일치성 확인
-        assertThat(calculateDtos.get(0).getFinalPaymentCost()).isEqualTo(10000L);
-        assertThat(calculateDtos.get(0).getType()).isEqualTo(CalculateType.MAIN_CALCULATE);
+        assertThat(calculateDtos.getContent()).extracting("finalPaymentCost").containsExactly(10000L,20000L);
     }
 }

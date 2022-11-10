@@ -2,15 +2,14 @@ package shop.kokodo.calculateservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import shop.kokodo.calculateservice.dto.CalculateDto;
-import shop.kokodo.calculateservice.dto.CalculateModalDto;
-import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
+import shop.kokodo.calculateservice.dto.*;
 import shop.kokodo.calculateservice.dto.response.Response;
 import shop.kokodo.calculateservice.service.CalculateService;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * packageName    : shop.kokodo.calculateservice.controller
@@ -35,7 +34,6 @@ public class CalculateController {
     @GetMapping("/expectDay")
     public Response expectDay() {
         LocalDateTime expectDay = calculateService.getExpectDay();
-        log.info("date in expectDay");
         return Response.success(expectDay);
     }
 
@@ -47,8 +45,8 @@ public class CalculateController {
     }
 
     @PostMapping("/{id}/calculateList")
-    public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition) {
-        List<CalculateDto> calculateList = calculateService.getCalculateList(calculateSearchCondition);
+    public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition, Pageable pageable) {
+        Page<CalculateDto> calculateList = calculateService.getCalculateList(calculateSearchCondition,pageable);
         return Response.success(calculateList);
     }
 
@@ -59,5 +57,11 @@ public class CalculateController {
         CalculateModalDto calculateModal = calculateService.getCalculateModal(sellerId, calculateId);
         log.info(calculateModal.getAccountHolder());
         return Response.success(calculateModal);
+    }
+
+    @GetMapping("/{sellerId}/SellerDashBoardExpectMoney")
+    public Response dashBoardCardInfo(@PathVariable Long sellerId){
+        DashBoardCardSearchInfoDto dashBoardCardSearchInfoDto = calculateService.dashBoardExpectMoney(sellerId);
+        return Response.success(dashBoardCardSearchInfoDto);
     }
 }

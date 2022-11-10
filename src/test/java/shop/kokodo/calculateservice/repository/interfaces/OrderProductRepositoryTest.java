@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import shop.kokodo.calculateservice.TestContext;
 import shop.kokodo.calculateservice.entity.Order;
 import shop.kokodo.calculateservice.entity.OrderProduct;
@@ -30,7 +30,7 @@ import static shop.kokodo.calculateservice.factory.entity.OrderProductFactory.cr
  * -----------------------------------------------------------
  * 2022/10/15        namhyeop       최초 생성
  */
-@DataJpaTest
+@SpringBootTest
 public class OrderProductRepositoryTest extends TestContext {
     @Autowired
     OrderProductRepository orderProductRepository;

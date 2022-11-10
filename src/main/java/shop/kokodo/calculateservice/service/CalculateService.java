@@ -3,6 +3,8 @@ package shop.kokodo.calculateservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.calculateservice.client.SellerServiceClient;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static shop.kokodo.calculateservice.circuitbreaker.factory.AllCircuitBreaker.createSellerCircuitBreaker;
+import static shop.kokodo.calculateservice.dto.DashBoardCardSearchInfoDto.createDashBoardCardSearchInfoDto;
 import static shop.kokodo.calculateservice.entity.Calculate.createCalculate;
 import static shop.kokodo.calculateservice.entity.Commission.createCommission;
 
@@ -80,6 +83,38 @@ public class CalculateService {
         return sum;
     }
 
+    public DashBoardCardSearchInfoDto dashBoardExpectMoney(Long id) {
+        LocalDateTime lateExpectDay = getExpectDay();
+        LocalDateTime toDayStartTime = lateExpectDay.minusDays(7);
+        LocalDateTime lastExpectDay = getExpectDay().minusDays(7);
+        LocalDateTime beforeDayStartTime = lastExpectDay.minusDays(7);
+        Long weakExpectMoney = calculateRepository.findWeakExpectMoney(id, toDayStartTime, lateExpectDay);
+        Long lastWeakExpectMoney = calculateRepository.findWeakExpectMoney(id, beforeDayStartTime, lastExpectDay);
+
+        if (weakExpectMoney == null){
+            weakExpectMoney = 0L;
+        }
+
+        if (lastWeakExpectMoney == null){
+            lastWeakExpectMoney = 0L;
+        }
+
+        String percentInfo = "";
+        if(weakExpectMoney > lastWeakExpectMoney){
+            percentInfo += "^";
+        }else{
+            percentInfo += "v";
+        }
+        Long diffValue = Math.abs(weakExpectMoney - lastWeakExpectMoney);
+        long total = weakExpectMoney + lastWeakExpectMoney;
+        long weakExpectMoneyPer = (long)((double)weakExpectMoney / total * 100.0);
+        long lastWeakExpectMoneyPer = (long)((double)lastWeakExpectMoney / total * 100.0);
+        long percentDiff = Math.abs(weakExpectMoneyPer - lastWeakExpectMoneyPer);
+
+        percentInfo += diffValue + " ("+String.valueOf(percentDiff) + "%"+")";
+        return createDashBoardCardSearchInfoDto(weakExpectMoney, percentInfo);
+    }
+
     public LocalDateTime getExpectDay() {
 
         LocalDateTime friDay = LocalDateTime.of(2022, 9, 30, 12, 0);
@@ -92,13 +127,13 @@ public class CalculateService {
         return friDay;
     }
 
-    public List<CalculateDto> getCalculateList(CalculateSearchCondition calculateSearchCondition) {
+    public Page<CalculateDto> getCalculateList(CalculateSearchCondition calculateSearchCondition, Pageable pageable) {
 
         if (calculateSearchCondition.getProvideStatus().getKey() == "ALL") {
             calculateSearchCondition.setProvideStatus(null);
         }
 
-        List<CalculateDto> calculateDto = calculateRepository.searchCalculate(calculateSearchCondition);
+        Page<CalculateDto> calculateDto = calculateRepository.searchCalculate(calculateSearchCondition, pageable);
 
         if(calculateDto == null){
             throw new CalculateNotFoundException("calculateService - 정산 데이터를 찾을 수 없습니다.");
