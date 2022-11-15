@@ -30,5 +30,9 @@ public interface CalculateRepository extends JpaRepository<Calculate, Long>, Cal
             + "from Calculate c "
             + "where c.sellerId = :sellerId and c.provideStatus ='PROVIDE_SUCCESS' and c.createdDate between :startDate and :endDate")
     Long findWeakExpectMoney(Long sellerId, @Param("startDate") LocalDateTime startDate,  @Param("endDate") LocalDateTime endDate);
+
+    //mysql에 의존적이라 테스트 코드에서 에러 발생, QueryDsl로 대체한다.
+//    @Query("select function('date_format', c.createdDate, '%Y, %m') as monthDate, sum(c.finalPaymentCost) from Calculate c where c.id = :id group by monthDate")
+//    List<Map<String, Object>> findAnnualSale2(Long id);
 }
 

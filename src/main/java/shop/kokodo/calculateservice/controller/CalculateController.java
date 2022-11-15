@@ -33,35 +33,31 @@ public class CalculateController {
 
     @GetMapping("/expectDay")
     public Response expectDay() {
-        LocalDateTime expectDay = calculateService.getExpectDay();
-        return Response.success(expectDay);
+        return Response.success(calculateService.getExpectDay());
     }
 
     @GetMapping("/{id}/expectMoney")
     public Response expectMoney(@PathVariable("id") Long id) {
-        Long expectMoney = calculateService.getExpectMoney(id);
-        log.info("date in expectMoney");
-        return Response.success(expectMoney);
+        return Response.success(calculateService.getExpectMoney(id));
     }
 
     @PostMapping("/{id}/calculateList")
     public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition, Pageable pageable) {
-        Page<CalculateDto> calculateList = calculateService.getCalculateList(calculateSearchCondition,pageable);
-        return Response.success(calculateList);
+        return Response.success(calculateService.getCalculateList(calculateSearchCondition,pageable));
     }
 
     @GetMapping("/{sellerId}/calculateModal/{calculateId}")
     public Response calculateModal(@PathVariable Long sellerId, @PathVariable Long calculateId){
-        log.info("sellerId {}", sellerId);
-        log.info("calculateId {}", calculateId);
-        CalculateModalDto calculateModal = calculateService.getCalculateModal(sellerId, calculateId);
-        log.info(calculateModal.getAccountHolder());
-        return Response.success(calculateModal);
+        return Response.success(calculateService.getCalculateModal(sellerId, calculateId));
     }
 
     @GetMapping("/{sellerId}/SellerDashBoardExpectMoney")
     public Response dashBoardCardInfo(@PathVariable Long sellerId){
-        DashBoardCardSearchInfoDto dashBoardCardSearchInfoDto = calculateService.dashBoardExpectMoney(sellerId);
-        return Response.success(dashBoardCardSearchInfoDto);
+        return Response.success(calculateService.dashBoardExpectMoney(sellerId));
+    }
+
+    @GetMapping("/{sellerId}/annualSalesInfo")
+    public Response annualSaleInfo(@PathVariable Long sellerId){
+        return Response.success(calculateService.getAnnualSaleList(sellerId));
     }
 }

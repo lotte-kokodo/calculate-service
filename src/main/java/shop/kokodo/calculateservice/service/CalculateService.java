@@ -1,5 +1,6 @@
 package shop.kokodo.calculateservice.service;
 
+import com.querydsl.core.Tuple;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
@@ -18,7 +19,10 @@ import shop.kokodo.calculateservice.repository.calculate.CalculateRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static shop.kokodo.calculateservice.circuitbreaker.factory.AllCircuitBreaker.createSellerCircuitBreaker;
 import static shop.kokodo.calculateservice.dto.DashBoardCardSearchInfoDto.createDashBoardCardSearchInfoDto;
@@ -100,18 +104,20 @@ public class CalculateService {
         }
 
         String percentInfo = "";
-        if(weakExpectMoney > lastWeakExpectMoney){
+
+        if (weakExpectMoney > lastWeakExpectMoney){
             percentInfo += "^";
         }else{
             percentInfo += "v";
         }
+
         Long diffValue = Math.abs(weakExpectMoney - lastWeakExpectMoney);
         long total = weakExpectMoney + lastWeakExpectMoney;
         long weakExpectMoneyPer = (long)((double)weakExpectMoney / total * 100.0);
         long lastWeakExpectMoneyPer = (long)((double)lastWeakExpectMoney / total * 100.0);
         long percentDiff = Math.abs(weakExpectMoneyPer - lastWeakExpectMoneyPer);
 
-        percentInfo += diffValue + " ("+String.valueOf(percentDiff) + "%"+")";
+        percentInfo += diffValue + "("+String.valueOf(percentDiff) + "%" + ")";
         return createDashBoardCardSearchInfoDto(weakExpectMoney, percentInfo);
     }
 
@@ -147,8 +153,6 @@ public class CalculateService {
         int totalCount = costList.size();
         List<Calculate> calculates = new ArrayList<>();
         for(int i = 0; i < totalCount; i++){
-            System.out.println(commissionList.get(i));
-            System.out.println(costList.get(i));
             Calculate calculate = createCalculate(commissionList.get(i), costList.get(i));
             calculates.add(calculate);
         }
@@ -170,5 +174,20 @@ public class CalculateService {
         }
 
         return CalculateModalDto.toDto(calculate, sellerFinanceInfo);
+    }
+
+    public AnnualSaleDto getAnnualSaleList(Long sellerId){
+        LocalDateTime startDate = LocalDateTime.of(LocalDateTime.now().getYear(), 01, 01, 00,00);
+        LocalDateTime endDate = LocalDateTime.of(LocalDateTime.now().getYear(), 12, 31, 00,00);
+        List<Tuple> annualSale = calculateRepository.getAnnualSale(sellerId, startDate, endDate);
+
+        List<Long> annualInfo = Arrays.asList(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        for(int idx = 0; idx < annualSale.size(); idx++){
+            String yearInfo = annualSale.get(idx).get(0, String.class);
+            int monthInfo = Integer.parseInt(yearInfo.substring(5));
+            Long saleMount = annualSale.get(idx).get(1, Long.class);
+            annualInfo.set(monthInfo, saleMount);
+        }
+        return AnnualSaleDto.createAnnualSaleDto(annualInfo);
     }
 }
