@@ -6,6 +6,10 @@ import shop.kokodo.calculateservice.enums.calculate.CalculateType;
 import shop.kokodo.calculateservice.enums.calculate.ProvideStatus;
 import shop.kokodo.calculateservice.enums.calculate.WithdrawalMethod;
 
+import java.time.LocalDateTime;
+
+import static java.time.LocalTime.now;
+
 /**
  * packageName    : shop.kokodo.calculateservice.factory.entity
  * fileName       : CalculateFactory
@@ -28,5 +32,9 @@ public class CalculateFactory {
 
     public static Calculate createCalculate(Commission commission, Long finalPaymentCost, Long sellerId) {
         return new Calculate(commission, CalculateType.MAIN_CALCULATE, "100%", ProvideStatus.PROVIDE_SUCCESS, WithdrawalMethod.BASIC_WITHDRAWAL, finalPaymentCost, sellerId);
+    }
+
+    public static Calculate createCalculate(Commission commission, Long finalPaymentCost, Long sellerId, LocalDateTime createDate, LocalDateTime modifyDate) {
+        return new Calculate(commission, CalculateType.MAIN_CALCULATE, "100%", ProvideStatus.PROVIDE_SUCCESS, WithdrawalMethod.BASIC_WITHDRAWAL, finalPaymentCost, sellerId, createDate, modifyDate);
     }
 }

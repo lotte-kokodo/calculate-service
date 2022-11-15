@@ -10,12 +10,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import shop.kokodo.calculateservice.DocumentConfiguration;
+import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
+import shop.kokodo.calculateservice.enums.calculate.CalculateType;
+import shop.kokodo.calculateservice.enums.calculate.ProvideStatus;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,6 +59,43 @@ class CalculateControllerTest extends DocumentConfiguration {
         statement.executeUpdate("SET REFERENTIAL_INTEGRITY TRUE");
     }
 
+    @DisplayName("정산 예정날짜 조회")
+    @Test
+    public void calculateExpectDay() throws Exception{
+        //given
+        //when
+        final ExtractableResponse<Response> response = RestAssured.
+                given(spec).log().all()
+                .filter(document("calculate-expectDay"))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when().get("/calculate/expectDay")
+                .then().log().all().extract();
+        //then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+    }
+
+    @DisplayName("정산 리스트 조회")
+    @Test
+    public void calculateList() throws Exception{
+        //given
+        Long sellerId = 1L;
+        LocalDateTime startDate = LocalDateTime.parse("1999-01-01T00:00:00");
+        LocalDateTime endDate = LocalDateTime.parse("2099-01-01T00:00:00");
+        ProvideStatus provideStatus = ProvideStatus.PROVIDE_SUCCESS;
+        CalculateType calculateType = CalculateType.MAIN_CALCULATE;
+        Long id = null;
+        CalculateSearchCondition calculateSearchCondition = new CalculateSearchCondition(sellerId, startDate, endDate, provideStatus, calculateType, id);
+        //when
+        final ExtractableResponse<Response> response = RestAssured.
+                given(spec).log().all()
+                .filter(document("calculate-list"))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(calculateSearchCondition)
+                .when().post("/calculate/" + sellerId+ "/calculateList")
+                .then().log().all().extract();
+        //then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+    }
 
     @DisplayName("정산 리스트에서 모달 요청 테스트")
     @Test
@@ -78,31 +119,4 @@ class CalculateControllerTest extends DocumentConfiguration {
         //then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
-
-//    @DisplayName("정산 리스트에서 모달 요청 테스트")
-//    @Test
-//    public void calculateModal() throws Exception{
-//        //given
-//        Map<String, Long> params = new HashMap<>();
-//        params.put("sellerId", 1L);
-//        params.put("calculateId", 1L);
-//
-////        RestDocumentationFilter restDocumentationFilter = document("calculate-modal", simpleReadPathParameterSnippet(), simpleRequestParameterSnippet(), simpleRequestBodySnippet(), simpleResponseFieldsSnippet());
-//        RestDocumentationFilter restDocumentationFilter = document("calculate-modal", simpleReadPathParameterSnippet(), simpleRequestBodySnippet(), simpleResponseFieldsSnippet());
-//
-//
-//        //when
-//        final ExtractableResponse<Response> response = RestAssured.
-//                given(spec).log().all()
-//                .filter(restDocumentationFilter)
-//                .body(params)
-//                .contentType(MediaType.APPLICATION_JSON_VALUE)
-//                //when()절에서는 이제 어떠한 uri의 api를 호출할 것인지 지정, post,get,put 이 예시이다.
-//                .when().get("/calculate/" + params.get("sellerId") + "/calculate/calculateModal/" + params.get("calculateId"))
-//                //http body 로그 출력
-//                .then().log().all().extract();
-//
-//        //then
-//        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-//    }
 }

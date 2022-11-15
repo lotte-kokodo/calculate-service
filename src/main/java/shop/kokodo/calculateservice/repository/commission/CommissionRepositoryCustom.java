@@ -1,5 +1,7 @@
 package shop.kokodo.calculateservice.repository.commission;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import shop.kokodo.calculateservice.dto.SaleListDto;
 import shop.kokodo.calculateservice.dto.SaleListSearchCondition;
 
@@ -18,5 +20,5 @@ import java.util.List;
  */
 public interface CommissionRepositoryCustom {
 
-    List<SaleListDto> searchSaleList(SaleListSearchCondition condition);
+    Page<SaleListDto> searchSaleList(SaleListSearchCondition condition, Pageable pageable);
 }

@@ -85,7 +85,7 @@ public class CalculateStepConfiguration {
         taskExecutor.setCorePoolSize(poolSize);
         // 작업 진행시 처리되지 않을 작업이 존재할 경우 몇 개의 Thread로 작업을 처리할 지에 대한 명시
         taskExecutor.setMaxPoolSize(poolSize);
-        // Thread별 일므 확인을 위해 "calculate-thread-" 고정
+        // Thread별 이름 확인을 위해 "calculate-thread-" 고정
         taskExecutor.setThreadNamePrefix("multi-thread-");
         // 종료시 작업완료까지 대기를 할 지에 대한 설정
         taskExecutor.setWaitForTasksToCompleteOnShutdown(Boolean.TRUE);

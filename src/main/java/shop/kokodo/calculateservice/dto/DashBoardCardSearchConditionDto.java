@@ -9,27 +9,20 @@ import java.time.LocalDateTime;
 
 /**
  * packageName    : shop.kokodo.calculateservice.dto
- * fileName       : SaleListSearchCondition
+ * fileName       : DashBoardCardInfoDto
  * author         : namhyeop
- * date           : 2022/10/18
+ * date           : 2022/11/10
  * description    :
- * 매출내역 조회를 위한 검색 Dto
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
- * 2022/10/18        namhyeop       최초 생성
+ * 2022/11/10        namhyeop       최초 생성
  */
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SaleListSearchCondition {
-
+@AllArgsConstructor
+public class DashBoardCardSearchConditionDto {
     private Long sellerId;
-
-    private LocalDateTime startDate;
-
-    private LocalDateTime endDate;
-
-    private String searchCondition;
-
+    private LocalDateTime today;
+    private LocalDateTime beforeDay;
 }

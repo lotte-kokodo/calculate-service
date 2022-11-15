@@ -2,6 +2,8 @@ package shop.kokodo.calculateservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,10 +36,8 @@ public class CommissionController {
     private final CommissionService commissionService;
 
     @PostMapping("/saleList")
-    public Response saleList(@RequestBody SaleListSearchCondition saleListSearchCondition){
-        log.info("SaleListSearchCondition = " + saleListSearchCondition);
-        List<SaleListDto> saleList = commissionService.getSaleList(saleListSearchCondition);
-        return  Response.success(saleList);
+    public Response saleList(@RequestBody SaleListSearchCondition saleListSearchCondition, Pageable pageable){
+        return  Response.success(commissionService.getSaleList(saleListSearchCondition, pageable));
     }
 
 }

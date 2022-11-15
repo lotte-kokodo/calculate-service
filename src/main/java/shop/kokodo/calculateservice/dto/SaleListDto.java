@@ -57,19 +57,4 @@ public class SaleListDto {
         this.settlementMoney = settlementMoney;
         this.sum = sum;
     }
-
-//    @QueryProjection
-//    public SaleListDto(Long sellerId, Long basic, Long salesPromotion, Long first_paymentDelivery, Long deliverySupport, Long discountSupport, Long mediumCompanyCostRefund, Long etc, CalculateType calculateType, Long finalPaymentCost) {
-//        this.sellerId = sellerId;
-//        this.basic = basic;
-//        this.salesPromotion = salesPromotion;
-//        this.firstPaymentDelivery = first_paymentDelivery;
-//        this.deliverySupport = deliverySupport;
-//        this.discountSupport = discountSupport;
-//        this.mediumCompanyCostRefund = mediumCompanyCostRefund;
-//        this.etc = etc;
-//
-//        this.calculateType = calculateType;
-//        this.finalPaymentCost = finalPaymentCost;
-//    }
 }

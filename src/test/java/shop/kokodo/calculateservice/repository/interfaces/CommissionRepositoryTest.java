@@ -25,7 +25,8 @@
 // * -----------------------------------------------------------
 // * 2022/10/04        namhyeop       최초 생성
 // */
-//@SpringBootTest
+//TODO:Jenkins 배포시 @DtatJpaTest 적용이 안되는 현상 발생으로 인한 주석 처리
+//@DataJpaTest
 //class CommissionRepositoryTest extends TestContext {
 //
 //    @Autowired

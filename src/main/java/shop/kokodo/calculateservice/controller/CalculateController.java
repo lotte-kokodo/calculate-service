@@ -2,15 +2,14 @@ package shop.kokodo.calculateservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-import shop.kokodo.calculateservice.dto.CalculateDto;
-import shop.kokodo.calculateservice.dto.CalculateModalDto;
-import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
+import shop.kokodo.calculateservice.dto.*;
 import shop.kokodo.calculateservice.dto.response.Response;
 import shop.kokodo.calculateservice.service.CalculateService;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * packageName    : shop.kokodo.calculateservice.controller
@@ -34,30 +33,31 @@ public class CalculateController {
 
     @GetMapping("/expectDay")
     public Response expectDay() {
-        LocalDateTime expectDay = calculateService.getExpectDay();
-        log.info("date in expectDay");
-        return Response.success(expectDay);
+        return Response.success(calculateService.getExpectDay());
     }
 
     @GetMapping("/{id}/expectMoney")
     public Response expectMoney(@PathVariable("id") Long id) {
-        Long expectMoney = calculateService.getExpectMoney(id);
-        log.info("date in expectMoney");
-        return Response.success(expectMoney);
+        return Response.success(calculateService.getExpectMoney(id));
     }
 
     @PostMapping("/{id}/calculateList")
-    public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition) {
-        List<CalculateDto> calculateList = calculateService.getCalculateList(calculateSearchCondition);
-        return Response.success(calculateList);
+    public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition, Pageable pageable) {
+        return Response.success(calculateService.getCalculateList(calculateSearchCondition,pageable));
     }
 
     @GetMapping("/{sellerId}/calculateModal/{calculateId}")
     public Response calculateModal(@PathVariable Long sellerId, @PathVariable Long calculateId){
-        log.info("sellerId {}", sellerId);
-        log.info("calculateId {}", calculateId);
-        CalculateModalDto calculateModal = calculateService.getCalculateModal(sellerId, calculateId);
-        log.info(calculateModal.getAccountHolder());
-        return Response.success(calculateModal);
+        return Response.success(calculateService.getCalculateModal(sellerId, calculateId));
+    }
+
+    @GetMapping("/{sellerId}/SellerDashBoardExpectMoney")
+    public Response dashBoardCardInfo(@PathVariable Long sellerId){
+        return Response.success(calculateService.dashBoardExpectMoney(sellerId));
+    }
+
+    @GetMapping("/{sellerId}/annualSalesInfo")
+    public Response annualSaleInfo(@PathVariable Long sellerId){
+        return Response.success(calculateService.getAnnualSaleList(sellerId));
     }
 }

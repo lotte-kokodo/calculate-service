@@ -13,9 +13,12 @@ import shop.kokodo.calculateservice.repository.commission.CommissionRepository;
 import shop.kokodo.calculateservice.repository.order.OrderRepository;
 import shop.kokodo.calculateservice.repository.orderproduct.OrderProductRepository;
 
+import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.time.LocalTime.now;
 import static shop.kokodo.calculateservice.factory.entity.CalculateFactory.createCalculate;
 import static shop.kokodo.calculateservice.factory.entity.CommissionFactory.createCommission;
 import static shop.kokodo.calculateservice.factory.entity.OrderFactory.createOrder;
@@ -46,10 +49,18 @@ public class DummyData implements CommandLineRunner {
     @Autowired
     OrderProductRepository orderProductRepository;
 
-    public static Calculate CALCULATE1;
+    public static Calculate CALCULATE1_1;
+    public static Calculate CALCULATE1_2;
+    public static Calculate CALCULATE1_3;
+    public static Calculate CALCULATE1_4;
+    public static Calculate CALCULATE1_5;
     public static Calculate CALCULATE2;
     public static Calculate CALCULATE3;
-    public static Commission COMMISSION1;
+    public static Commission COMMISSION1_1;
+    public static Commission COMMISSION1_2;
+    public static Commission COMMISSION1_3;
+    public static Commission COMMISSION1_4;
+    public static Commission COMMISSION1_5;
     public static Commission COMMISSION2;
     public static Commission COMMISSION3;
     public static Order ORDER1;
@@ -68,14 +79,25 @@ public class DummyData implements CommandLineRunner {
     public List<OrderProduct> ORDERPRODUCTS2 = new ArrayList<>();
     public List<OrderProduct> ORDERPRODUCTS3 = new ArrayList<>();
 
-
+    @Autowired
+    EntityManager em;
     @Override
     public void run(String... args) throws Exception {
-        COMMISSION1 = createCommission(1L);
+        COMMISSION1_1 = createCommission(1L);
+        COMMISSION1_2 = createCommission(1L);
+        COMMISSION1_3 = createCommission(1L);
+        COMMISSION1_4 = createCommission(1L);
+        COMMISSION1_5 = createCommission(1L);
         COMMISSION2 = createCommission(2L);
         COMMISSION3 = createCommission(3L);
 
-        CALCULATE1 = calculateRepository.save(createCalculate(COMMISSION1, 10000L, 1L));
+        CALCULATE1_1 = calculateRepository.save(createCalculate(COMMISSION1_1, 10000L, 1L));
+        CALCULATE1_2 = calculateRepository.save(createCalculate(COMMISSION1_2, 20000L, 1L));
+        CALCULATE1_3 = calculateRepository.save(createCalculate(COMMISSION1_3, 30000L, 1L));
+
+        CALCULATE1_4 = calculateRepository.save(createCalculate(COMMISSION1_4, 5000L, 1L));
+        CALCULATE1_5 = calculateRepository.save(createCalculate(COMMISSION1_5, 20000L, 1L));
+
         CALCULATE2 = calculateRepository.save(createCalculate(COMMISSION2, 20000L, 2L));
         CALCULATE3 = calculateRepository.save(createCalculate(COMMISSION3, 30000L, 3L));
 

@@ -1,8 +1,12 @@
 package shop.kokodo.calculateservice.repository.calculate;
 
+import com.querydsl.core.Tuple;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import shop.kokodo.calculateservice.dto.CalculateDto;
 import shop.kokodo.calculateservice.dto.CalculateSearchCondition;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -18,6 +22,7 @@ import java.util.List;
  */
 public interface CalculateRepositoryCustom {
 
-    List<CalculateDto> searchCalculate(CalculateSearchCondition condition);
+    Page<CalculateDto> searchCalculate(CalculateSearchCondition condition, Pageable pageable);
 
+    List<Tuple> getAnnualSale(Long sellerId, LocalDateTime startDate, LocalDateTime endDate);
 }

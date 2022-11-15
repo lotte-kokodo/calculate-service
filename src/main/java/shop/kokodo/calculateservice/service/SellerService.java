@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.calculateservice.client.SellerServiceClient;
 import shop.kokodo.calculateservice.dto.CommissionPolicyDto;
 
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class SellerService {
 
     private final SellerServiceClient sellerServiceClient;

@@ -1,10 +1,16 @@
 package shop.kokodo.calculateservice.repository.commission;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 import shop.kokodo.calculateservice.dto.QSaleListDto;
 import shop.kokodo.calculateservice.dto.SaleListDto;
 import shop.kokodo.calculateservice.dto.SaleListSearchCondition;
+import shop.kokodo.calculateservice.entity.Commission;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
@@ -33,8 +39,8 @@ public class CommissionRepositoryImpl implements CommissionRepositoryCustom {
     }
 
     @Override
-    public List<SaleListDto> searchSaleList(SaleListSearchCondition condition) {
-        return queryFactory
+    public Page<SaleListDto> searchSaleList(SaleListSearchCondition condition, Pageable pageable) {
+        List<SaleListDto> content = queryFactory
                 .select(new QSaleListDto(
                         commission.sellerId,
                         commission.basic,
@@ -51,7 +57,18 @@ public class CommissionRepositoryImpl implements CommissionRepositoryCustom {
                 .where(
                         sellerIdEq(condition.getSellerId()),
                         dateGoeAndLoe(condition.getStartDate(), condition.getEndDate())
-                ).fetch();
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        JPAQuery<Commission> countQuery = queryFactory
+                .select(commission)
+                .from(commission)
+                .where(
+                        sellerIdEq(condition.getSellerId()),
+                        dateGoeAndLoe(condition.getStartDate(), condition.getEndDate()));
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
     }
 
     private BooleanExpression sellerIdEq(Long sellerId) {

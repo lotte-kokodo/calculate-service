@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Calculate Modal API</title>
+<title>Calculate-Modal-API</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,13 +438,106 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article">
 <div id="header">
+<h1>Calculate-Modal-API</h1>
+<div class="details">
+<span id="revnumber">version 0.0.1-SNAPSHOT</span>
+</div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="Calculate-Modal-API">Calculate Modal API</h2>
+<h2 id="Calculate-Modal-API"><a class="link" href="#Calculate-Modal-API">Calculate Modal API</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in Calculate-Modal-API.adoc - include::{snippets}/calculate-modal/http-request.adoc[]</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:59368/calculate/1/calculateModal/1' -i -X GET \
+    -H 'Content-Type: application/json' \
+    -d '{
+  "sellerId" : 1,
+  "calculateId" : 1
+}'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /calculate/1/calculateModal/1 HTTP/1.1
+Content-Type: application/json
+Host: localhost:59368
+Content-Length: 41
+
+{
+  "sellerId" : 1,
+  "calculateId" : 1
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json
+Transfer-Encoding: chunked
+Date: Tue, 15 Nov 2022 12:17:20 GMT
+Keep-Alive: timeout=60
+Connection: keep-alive
+Content-Length: 521
+
+{
+  "success" : true,
+  "code" : 200,
+  "result" : {
+    "data" : {
+      "finalPaymentCost" : 10000,
+      "provideStatus" : "지급확정",
+      "basic" : 10000,
+      "salesPromotion" : 20000,
+      "firstPaymentDelivery" : 30000,
+      "deliverySupport" : 40000,
+      "discountSupport" : 5000,
+      "mediumCompanyCostRefund" : 6000,
+      "etc" : 7000,
+      "commissionSum" : 2000,
+      "bankName" : "카카오뱅크",
+      "accountNumber" : "110-231233-112332",
+      "accountHolder" : "김남협1"
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "sellerId" : 1,
+  "calculateId" : 1
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : true,
+  "code" : 200,
+  "result" : {
+    "data" : {
+      "finalPaymentCost" : 10000,
+      "provideStatus" : "지급확정",
+      "basic" : 10000,
+      "salesPromotion" : 20000,
+      "firstPaymentDelivery" : 30000,
+      "deliverySupport" : 40000,
+      "discountSupport" : 5000,
+      "mediumCompanyCostRefund" : 6000,
+      "etc" : 7000,
+      "commissionSum" : 2000,
+      "bankName" : "카카오뱅크",
+      "accountNumber" : "110-231233-112332",
+      "accountHolder" : "김남협1"
+    }
+  }
+}</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -452,7 +545,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-10-31 12:12:33 +0900
+Last updated 2022-11-15 20:48:32 +0900
 </div>
 </div>
 </body>
