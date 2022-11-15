@@ -34,7 +34,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query("select MIN(o.id) " +
             "from Order o " +
-            "where o.orderDate between :startDate and :endDate")
+            "where o.orderDate " +
+            "between :startDate and :endDate")
     Long findMinId(@Param("startDate") LocalDateTime startDate,
                    @Param("endDate") LocalDateTime endDate);
 }

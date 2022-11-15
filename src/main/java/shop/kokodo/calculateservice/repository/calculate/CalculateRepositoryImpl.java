@@ -1,10 +1,13 @@
 package shop.kokodo.calculateservice.repository.calculate;
 
+import com.querydsl.core.Tuple;
+import com.querydsl.core.types.ConstantImpl;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.StringTemplate;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import shop.kokodo.calculateservice.dto.CalculateDto;
@@ -71,6 +74,27 @@ public class CalculateRepositoryImpl implements CalculateRepositoryCustom {
                         providStatuseEq(condition.getProvideStatus()),
                         calculateTypeEq(condition.getCalculateType()));
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
+    }
+
+    @Override
+    public List<Tuple> getAnnualSale(Long sellerId, LocalDateTime startDate, LocalDateTime endDate) {
+        StringTemplate formattedDate = Expressions.stringTemplate(
+                "DATE_FORMAT({0}, {1})"
+                , calculate.createdDate
+                , ConstantImpl.create("%Y-%m"));
+
+        List<Tuple> ret = queryFactory.select(
+                        formattedDate,
+                        calculate.finalPaymentCost.sum())
+                .from(calculate)
+                .where(
+                        sellerIdEq(sellerId),
+                        dateGoeAndLoe(startDate, endDate)
+                )
+                .groupBy(formattedDate)
+                .fetch();
+
+        return ret;
     }
 
     private BooleanExpression calculateIdEq(Long id) {

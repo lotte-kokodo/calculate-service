@@ -37,9 +37,7 @@ public class CommissionController {
 
     @PostMapping("/saleList")
     public Response saleList(@RequestBody SaleListSearchCondition saleListSearchCondition, Pageable pageable){
-        log.info("SaleListSearchCondition = " + saleListSearchCondition);
-        Page<SaleListDto> saleList = commissionService.getSaleList(saleListSearchCondition, pageable);
-        return  Response.success(saleList);
+        return  Response.success(commissionService.getSaleList(saleListSearchCondition, pageable));
     }
 
 }
