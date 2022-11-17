@@ -21,8 +21,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static shop.kokodo.calculateservice.circuitbreaker.factory.AllCircuitBreaker.createSellerCircuitBreaker;
 import static shop.kokodo.calculateservice.dto.DashBoardCardSearchInfoDto.createDashBoardCardSearchInfoDto;
@@ -134,7 +132,10 @@ public class CalculateService {
     }
 
     public Page<CalculateDto> getCalculateList(CalculateSearchCondition calculateSearchCondition, Pageable pageable) {
-
+        System.out.println("calculateSearchCondition = " + calculateSearchCondition);
+        System.out.println(calculateSearchCondition.getProvideStatus());
+        System.out.println(calculateSearchCondition.getProvideStatus().getKey());
+        System.out.println(calculateSearchCondition.getProvideStatus().getValue());
         if (calculateSearchCondition.getProvideStatus().getKey() == "ALL") {
             calculateSearchCondition.setProvideStatus(null);
         }
@@ -144,7 +145,6 @@ public class CalculateService {
         if(calculateDto == null){
             throw new CalculateNotFoundException("calculateService - 정산 데이터를 찾을 수 없습니다.");
         }
-
         return calculateDto;
     }
 
@@ -156,6 +156,8 @@ public class CalculateService {
             Calculate calculate = createCalculate(commissionList.get(i), costList.get(i));
             calculates.add(calculate);
         }
+
+        log.info("==============calculate save success, {}============", calculates);
         calculateRepository.saveAll(calculates);
     }
 

@@ -38,11 +38,12 @@ public class ProductService {
     public List<Long> getSellerId(Long orderId) {
 
         List<Long> productIdByOrderId = orderProductRepository.findProductIdByOrderId(orderId);
+        log.info("productIdByOrderId, {}", productIdByOrderId);
         CircuitBreaker productCircuitBreaker = circuitBreakerFactory.create("productCircuitBreaker");
         List<Long> sellerId = productCircuitBreaker.run(() -> productServiceClient.getProductSellerId(productIdByOrderId), throwable -> new ArrayList<>());
-
+        log.info("Feign arrival after sellerId {}", sellerId);
         if (sellerId.isEmpty()) {
-            throw new FeignClientFailException();
+            throw new FeignClientFailException("CalculateService-Feign 통신에서 값을 받아오지 못했습니다.");
         }
 
         return sellerId;

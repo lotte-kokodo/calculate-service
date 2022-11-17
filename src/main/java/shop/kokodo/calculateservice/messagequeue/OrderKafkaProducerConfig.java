@@ -14,12 +14,11 @@ import java.util.HashMap;
 @EnableKafka
 @Configuration
 public class OrderKafkaProducerConfig {
-
     @Bean
     public ProducerFactory<String, String> producerFactory() {
 
         HashMap<String, Object> properties = new HashMap<>();
-
+        //TODO: KAFKA 배포시 IP 수정 필요
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);

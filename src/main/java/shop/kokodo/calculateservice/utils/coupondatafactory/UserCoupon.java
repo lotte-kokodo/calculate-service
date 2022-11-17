@@ -18,7 +18,7 @@ public class UserCoupon {
     public static void main(String[] args) {
         String tableName = "user_coupon";
         String column = "user_coupon_id, rate_coupon_id, fix_couponid, user_id, usage_status";
-//        String column = "\'order_id\', \'user_id\', \'order_status\', \'delivery_name\', \'delivery_address\',\'total_price\', \'order_date\'";
+//        String column = "\'order_id\', \'user_id\', \'order_status\', \'delivery_member_name\', \'delivery_member_address\',\'total_price\', \'order_date\'";
         //3개
         ArrayList<Integer> atb1 = new ArrayList<>();
         atb1.add(0);

@@ -175,7 +175,7 @@ public class CalculateStepConfiguration {
                 log.info("======================process 5======================");
 ////                TODO: (1)통합 테스트시 주석해제
 //                sellerId와 commissionPolicy의 idx 관계는 절대적으로 지켜져야한다 예를 들어 sellerId(0)번째의 수수료는 commissionPolicy(0)번째이다. sellerId(0)일 경우 commissionPolicy(1)이면 안된다.
-                List<CommissionPolicyDto> commissionPolicy = sellerService.findCommissionPolicy(sellerId);
+                List<CommissionPolicyDto> commissionPolicy = sellerService.searchCommissionPolicy(sellerId);
                 log.info("======================process 6======================");
                 CostAndCommissionDto costAndCommissionDto = calculateService.getCommission(commissionPolicy, o.getTotalPrice());
                 log.info("======================process 7======================");
@@ -185,7 +185,7 @@ public class CalculateStepConfiguration {
                 orderKafkaProducer.sendOrderStatus("order-id-topic", o.getId());
                 log.info("======================process 9======================");
             }
-            System.out.println("====================== writer end============================");
+            log.info("====================== writer end============================");
         };
     }
 

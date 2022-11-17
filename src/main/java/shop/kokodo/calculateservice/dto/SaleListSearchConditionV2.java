@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
 
 /**
@@ -23,14 +22,17 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SaleListSearchCondition {
+public class SaleListSearchConditionV2 {
 
     private Long sellerId;
+
     private LocalDateTime startDate;
+
     private LocalDateTime endDate;
+
     private String searchCondition;
 
-    public static SaleListSearchCondition createSaleListCondition(Long sellerId, LocalDateTime startDate, LocalDateTime endDate, String searchCondition) {
-        return new SaleListSearchCondition(sellerId, startDate, endDate, searchCondition);
+    public static SaleListSearchConditionV2 createSaleListCondition(Long sellerId, LocalDateTime startDate, LocalDateTime endDate, String searchCondition) {
+        return new SaleListSearchConditionV2(sellerId, startDate, endDate, searchCondition);
     }
 }

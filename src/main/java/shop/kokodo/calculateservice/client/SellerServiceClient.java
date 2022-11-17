@@ -23,7 +23,7 @@ import java.util.List;
 @FeignClient(name = "seller-service")
 public interface SellerServiceClient {
     @GetMapping("/seller/commissionPolicy")
-    List<CommissionPolicyDto> getSellerCommissionPolicy(@RequestParam List<Long> sellerId);
+    List<CommissionPolicyDto> searchCommissionPolicy(@RequestParam List<Long> sellerId);
 
     @GetMapping("/sellerFinanceInfo/finance")
     FinanceInfoDto getSellerFinanceInfo(@RequestParam Long sellerId);
