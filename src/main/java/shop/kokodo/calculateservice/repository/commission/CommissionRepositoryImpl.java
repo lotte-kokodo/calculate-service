@@ -4,7 +4,6 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import shop.kokodo.calculateservice.dto.QSaleListDto;
@@ -16,6 +15,7 @@ import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static shop.kokodo.calculateservice.entity.QCalculate.calculate;
 import static shop.kokodo.calculateservice.entity.QCommission.commission;
 
 /**
@@ -50,14 +50,15 @@ public class CommissionRepositoryImpl implements CommissionRepositoryCustom {
                         commission.discountSupport,
                         commission.mediumCompanyCostRefund,
                         commission.etc,
-                        commission.calculate.calculateType,
-                        commission.calculate.finalPaymentCost
+                        calculate.calculateType,
+                        calculate.finalPaymentCost
                 ))
                 .from(commission)
+                .leftJoin(commission.calculate, calculate)
                 .where(
                         sellerIdEq(condition.getSellerId()),
-                        dateGoeAndLoe(condition.getStartDate(), condition.getEndDate())
-                )
+                        dateGoeAndLoe(condition.getStartDate(), condition.getEndDate()),
+                        providStatuseEq(condition.getSearchCondition()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -65,10 +66,12 @@ public class CommissionRepositoryImpl implements CommissionRepositoryCustom {
         JPAQuery<Commission> countQuery = queryFactory
                 .select(commission)
                 .from(commission)
+                .leftJoin(commission.calculate, calculate)
                 .where(
                         sellerIdEq(condition.getSellerId()),
-                        dateGoeAndLoe(condition.getStartDate(), condition.getEndDate()));
-        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
+                        dateGoeAndLoe(condition.getStartDate(), condition.getEndDate()),
+                        providStatuseEq(condition.getSearchCondition()));
+        return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetchCount());
     }
 
     private BooleanExpression sellerIdEq(Long sellerId) {
@@ -78,5 +81,7 @@ public class CommissionRepositoryImpl implements CommissionRepositoryCustom {
     private BooleanExpression dateGoeAndLoe(LocalDateTime startDate, LocalDateTime endDate) {
         return startDate == null ? null : commission.createdDate.between(startDate, endDate);
     }
-
+    private BooleanExpression providStatuseEq(String searchCondition) {
+        return searchCondition == null ? null : null;
+    }
 }

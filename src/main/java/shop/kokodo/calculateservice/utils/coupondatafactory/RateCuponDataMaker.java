@@ -18,7 +18,7 @@ public class RateCuponDataMaker {
     public static void main(String[] args) {
         String tableName = "rate_coupon";
         String column = "rate_coupon_id, name, regdate, rate, min_price, start_date, end_date, product_id";
-//        String column = "\'order_id\', \'user_id\', \'order_status\', \'delivery_name\', \'delivery_address\',\'total_price\', \'order_date\'";
+//        String column = "\'order_id\', \'user_id\', \'order_status\', \'delivery_member_name\', \'delivery_member_address\',\'total_price\', \'order_date\'";
         //10개
         ArrayList<String> atb2 = new ArrayList<>();
         atb2.add("쿠폰이름1");

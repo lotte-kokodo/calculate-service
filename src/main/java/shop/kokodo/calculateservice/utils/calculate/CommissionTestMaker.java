@@ -18,7 +18,7 @@ public class CommissionTestMaker {
     public static void main(String[] args) {
         String tableName = "commission";
         String column = "commission_id, seller_id, basic, sales_promotion, first_payment_delivery, delivery_support, discount_support,medium_company_cost_refund,etc";
-//        String column = "\'order_id\', \'user_id\', \'order_status\', \'delivery_name\', \'delivery_address\',\'total_price\', \'order_date\'";
+//        String column = "\'order_id\', \'user_id\', \'order_status\', \'delivery_member_name\', \'delivery_member_address\',\'total_price\', \'order_date\'";
 
         //판매자 아이디
         ArrayList<Integer> atb2 = new ArrayList<>();

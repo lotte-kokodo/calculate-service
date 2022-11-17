@@ -74,6 +74,22 @@ class CalculateControllerTest extends DocumentConfiguration {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
+    @DisplayName("정산 예정 금액")
+    @Test
+    public void calculateExpectMoney() throws Exception{
+        //given
+        Long sellerId = 1L;
+        //when
+        final ExtractableResponse<Response> response = RestAssured.
+                given(spec).log().all()
+                .filter(document("calculate-expect-money"))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .when().get("/calculate/" + sellerId + "/expectMoney")
+                .then().log().all().extract();
+        //then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+    }
+
     @DisplayName("정산 리스트 조회")
     @Test
     public void calculateList() throws Exception{
@@ -84,7 +100,7 @@ class CalculateControllerTest extends DocumentConfiguration {
         ProvideStatus provideStatus = ProvideStatus.PROVIDE_SUCCESS;
         CalculateType calculateType = CalculateType.MAIN_CALCULATE;
         Long id = null;
-        CalculateSearchCondition calculateSearchCondition = new CalculateSearchCondition(sellerId, startDate, endDate, provideStatus, calculateType, id);
+        CalculateSearchCondition calculateSearchCondition = new CalculateSearchCondition(sellerId, startDate, endDate, provideStatus, calculateType, id, 0, 5);
         //when
         final ExtractableResponse<Response> response = RestAssured.
                 given(spec).log().all()
@@ -119,4 +135,49 @@ class CalculateControllerTest extends DocumentConfiguration {
         //then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
+
+    @DisplayName("Seller Dashboard 주 정산 예정 금액")
+    @Test
+    public void dashBoardCardInfo() throws Exception{
+        //given
+        Map<String, Long> params = new HashMap<>();
+        params.put("sellerId", 1L);
+
+        //when
+        final ExtractableResponse<Response> response = RestAssured.
+                given(spec).log().all()
+                .filter(document("calculate-dashboard-card"))
+                .body(params)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                //when()절에서는 이제 어떠한 uri의 api를 호출할 것인지 지정, post,get,put 이 예시이다.
+                .when().get("/calculate/" + params.get("sellerId") + "/SellerDashBoardExpectMoney")
+                //http body 로그 출력
+                .then().log().all().extract();
+
+        //then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+    }
+
+//    @DisplayName("Seller Dashboard 차트 데이터")
+//    @Test
+//    public void annualSaleInfo() throws Exception{
+//        //given
+//        Map<String, Long> params = new HashMap<>();
+//        params.put("sellerId", 1L);
+//
+//        //when
+//        final ExtractableResponse<Response> response = RestAssured.
+//                given(spec).log().all()
+//                .filter(document("calculate-dashboard-chart-data"))
+//                .body(params)
+//                .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                //when()절에서는 이제 어떠한 uri의 api를 호출할 것인지 지정, post,get,put 이 예시이다.
+//                .when().get("/calculate/" + params.get("sellerId") + "/annualSalesInfo")
+//                //http body 로그 출력
+//                .then().log().all().extract();
+//
+//        //then
+//        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+//    }
+
 }
