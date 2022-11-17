@@ -14,6 +14,8 @@ import shop.kokodo.calculateservice.repository.orderproduct.OrderProductReposito
 import java.util.ArrayList;
 import java.util.List;
 
+import static shop.kokodo.calculateservice.exception.message.BatchErrorMessage.PRODUCT_FEIGN_NULL;
+
 /**
  * packageName    : shop.kokodo.calculateservice.service
  * fileName       : ProductService
@@ -43,7 +45,7 @@ public class ProductService {
         List<Long> sellerId = productCircuitBreaker.run(() -> productServiceClient.getProductSellerId(productIdByOrderId), throwable -> new ArrayList<>());
         log.info("Feign arrival after sellerId {}", sellerId);
         if (sellerId.isEmpty()) {
-            throw new FeignClientFailException("CalculateService-Feign 통신에서 값을 받아오지 못했습니다.");
+            throw new FeignClientFailException(PRODUCT_FEIGN_NULL);
         }
 
         return sellerId;

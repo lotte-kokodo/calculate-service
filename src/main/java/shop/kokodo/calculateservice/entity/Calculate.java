@@ -71,7 +71,6 @@ public class Calculate extends BaseEntity {
     }
 
     public static Calculate createCalculate(Commission commission, Long cost) {
-        System.out.println("commission = " + commission);
         Calculate calculate = Calculate.builder()
                 .commission(commission)
                 .calculateType(CalculateType.MAIN_CALCULATE)
