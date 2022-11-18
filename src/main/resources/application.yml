@@ -5,23 +5,9 @@
 server:
   port: 0 # Eureka 로부터 자동 포트 부여
 
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://eureka-service:9001/eureka
-
 spring:
   application:
     name: calculate-service
-  rabbitmq:
-    host: rabbitmq
-    port: 5672
-    username: guest
-    password: guest
   zipkin:
     base-url: http://zipkin:9411
     enabled: true
@@ -32,30 +18,31 @@ spring:
     active: rds
   batch:
     job:
-      # qurtz ??? ?? ????? enabled? true? ????.
       enabled: true
       names: ${job.name:NONE}
   jpa:
     hibernate:
-      ddl-auto: update
-    #    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+      ddl-auto: create
+    physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     show-sql: true
     properties:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
-#    database-platform: org.hibernate.dialect.H2Dialect
 
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
-    com.example.userservice.client: DEBUG
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh, health, beans, busrefresh, info, prometheus, metrics
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-service:9001/eureka
 ---
 spring:
   config:
@@ -106,12 +93,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url:
     slave-list:
-      - name: slave-1
-        url:
-      - name: slave-2
-        url:
+      slave1:
+      slave2:
     username:
     password:
 
 kafka:
-  address: 
+  address:
