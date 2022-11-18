@@ -47,7 +47,7 @@ class CalculateServiceTest {
     CommissionRepository commissionRepository;
 
     @DisplayName("대시보드 카드 정보")
-//    @Test
+    //@Test
     public void dashBoardExpectMoney(){
         LocalDateTime today = LocalDateTime.of(2022, 11, 11, 00,00);
         LocalDateTime toDayStartTime = today.minusDays(7);
@@ -95,12 +95,12 @@ class CalculateServiceTest {
         System.out.println("lastWeakExpectMoneyPer = " + lastWeakExpectMoneyPer);
         System.out.println("percentDiff = " + percentDiff);
 
-        Assertions.assertThat(77).isEqualTo((long)weakExpectMoneyPer);
-        Assertions.assertThat(22).isEqualTo((long)lastWeakExpectMoneyPer);
-        Assertions.assertThat(55).isEqualTo((long)percentDiff);
+        Assertions.assertThat(0).isEqualTo((long)weakExpectMoneyPer);
+        Assertions.assertThat(100).isEqualTo((long)lastWeakExpectMoneyPer);
+        Assertions.assertThat(100).isEqualTo((long)percentDiff);
 
-        Assertions.assertThat(weakExpectMoney).isEqualTo(85000);
-        Assertions.assertThat(percentInfo).isEqualTo("^60000 (55%)");
+        Assertions.assertThat(weakExpectMoney).isEqualTo(0);
+        Assertions.assertThat(percentInfo).isEqualTo("v25000 (100%)");
     }
 
     @DisplayName("년도 기준 월별 정산 정보")

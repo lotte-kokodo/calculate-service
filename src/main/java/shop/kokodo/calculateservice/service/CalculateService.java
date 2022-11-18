@@ -22,12 +22,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static shop.kokodo.calculateservice.circuitbreaker.factory.AllCircuitBreaker.createSellerCircuitBreaker;
 import static shop.kokodo.calculateservice.dto.DashBoardCardSearchInfoDto.createDashBoardCardSearchInfoDto;
 import static shop.kokodo.calculateservice.entity.Calculate.createCalculate;
 import static shop.kokodo.calculateservice.entity.Commission.createCommission;
+import static shop.kokodo.calculateservice.exception.message.BatchErrorMessage.CALCULATE_DATA_NULL;
+import static shop.kokodo.calculateservice.exception.message.BatchErrorMessage.SELLER_FEIGN_FINANCE_NULL;
 
 /**
  * packageName    : shop.kokodo.calculateservice.service
@@ -58,20 +59,20 @@ public class CalculateService {
         for (int i = 0; i < commissionPolicyDtoList.size(); i++) {
             CommissionPolicyDto commissionPolicyDto = commissionPolicyDtoList.get(0);
 
-            Long basicCost = (long) (money * commissionPolicyDto.getBasic());
-            Long salesPromotionCost = (long) (money * commissionPolicyDto.getSalesPromotion());
-            Long firstPaymentDeliveryCost = (long) (money * commissionPolicyDto.getFirstPaymentDelivery());
+            final Long basicCost = (long) (money * commissionPolicyDto.getBasic());
+            final Long salesPromotionCost = (long) (money * commissionPolicyDto.getSalesPromotion());
+            final Long firstPaymentDeliveryCost = (long) (money * commissionPolicyDto.getFirstPaymentDelivery());
 
-            Long deliverySupportCost = (long) (money * commissionPolicyDto.getDeliverySupport());
-            Long disCountSupportCost = (long) (money * commissionPolicyDto.getDiscountSupport());
-            Long mediumCompanyCostRefundCost = (long) (money * commissionPolicyDto.getMediumCompanyCostRefund());
-            Long etCost = (long) (money * commissionPolicyDto.getEtc());
+            final Long deliverySupportCost = (long) (money * commissionPolicyDto.getDeliverySupport());
+            final Long disCountSupportCost = (long) (money * commissionPolicyDto.getDiscountSupport());
+            final Long mediumCompanyCostRefundCost = (long) (money * commissionPolicyDto.getMediumCompanyCostRefund());
+            final Long etCost = (long) (money * commissionPolicyDto.getEtc());
 
-            Long burdenCost = money - (basicCost + salesPromotionCost + firstPaymentDeliveryCost);
-            Long supportCost = deliverySupportCost + disCountSupportCost + mediumCompanyCostRefundCost + etCost;
+            final Long burdenCost = money - (basicCost + salesPromotionCost + firstPaymentDeliveryCost);
+            final Long supportCost = deliverySupportCost + disCountSupportCost + mediumCompanyCostRefundCost + etCost;
 
-            Long finalPaymentCost = money - burdenCost + supportCost;
-            Commission commission = createCommission(null, commissionPolicyDto.getSellerId(), basicCost, salesPromotionCost, firstPaymentDeliveryCost, deliverySupportCost, disCountSupportCost, mediumCompanyCostRefundCost, etCost);
+            final Long finalPaymentCost = money - burdenCost + supportCost;
+            final Commission commission = createCommission(null, commissionPolicyDto.getSellerId(), basicCost, salesPromotionCost, firstPaymentDeliveryCost, deliverySupportCost, disCountSupportCost, mediumCompanyCostRefundCost, etCost);
             retCostList.add(finalPaymentCost);
             retCommissionList.add(commission);
         }
@@ -142,35 +143,29 @@ public class CalculateService {
         Page<CalculateDto> calculateDto = calculateRepository.searchCalculate(calculateSearchCondition, pageable);
 
         if(calculateDto == null){
-            throw new CalculateNotFoundException("calculateService - 정산 데이터를 찾을 수 없습니다.");
+            throw new CalculateNotFoundException(CALCULATE_DATA_NULL);
         }
-
         return calculateDto;
     }
 
     @Transactional
     public void makeCalculate(List<Long> costList, List<Commission> commissionList) {
-        int totalCount = costList.size();
-        List<Calculate> calculates = new ArrayList<>();
-        for(int i = 0; i < totalCount; i++){
-            Calculate calculate = createCalculate(commissionList.get(i), costList.get(i));
-            calculates.add(calculate);
-        }
-        calculateRepository.saveAll(calculates);
+        List<Calculate> calculateList = commissionList.stream().map((c) -> createCalculate(c, costList.get(commissionList.indexOf(c)))).collect(Collectors.toList());
+        calculateRepository.saveAll(calculateList);
     }
 
     public CalculateModalDto getCalculateModal(Long sellerId, Long calculateId){
         Calculate calculate = calculateRepository.findById(calculateId).orElseThrow(CalculateListNotFoundException::new);
 
         if(calculate == null){
-            throw new CalculateNotFoundException("calculateService - 정산 데이터를 찾을 수 없습니다.");
+            throw new CalculateNotFoundException(CALCULATE_DATA_NULL);
         }
 
         CircuitBreaker sellerCircuitBreaker = createSellerCircuitBreaker();
         FinanceInfoDto sellerFinanceInfo = sellerCircuitBreaker.run(() ->sellerServiceClient.getSellerFinanceInfo(sellerId), throwable -> new FinanceInfoDto());
 
         if (sellerFinanceInfo == null) {
-            throw new SellerFinanceNotFoundException("calculateService - Feign 통신으로부터 판매자 금융 정보를 찾을 수 없습니다.");
+            throw new SellerFinanceNotFoundException(SELLER_FEIGN_FINANCE_NULL);
         }
 
         return CalculateModalDto.toDto(calculate, sellerFinanceInfo);

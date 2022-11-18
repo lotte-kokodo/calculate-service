@@ -22,7 +22,6 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-//@ToString
 public class Commission extends BaseEntity {
 
     @Id
@@ -40,16 +39,21 @@ public class Commission extends BaseEntity {
     @Column(nullable = false)
     private Long basic;
 
+    @Column(nullable = false)
     private Long salesPromotion;
-
+    @Column(nullable = false)
     private Long firstPaymentDelivery;
 
+    @Column(nullable = false)
     private Long deliverySupport;
 
+    @Column(nullable = false)
     private Long discountSupport;
 
+    @Column(nullable = false)
     private Long mediumCompanyCostRefund;
 
+    @Column(nullable = false)
     private Long etc;
 
     public void changeCalculate(Calculate calculate) {

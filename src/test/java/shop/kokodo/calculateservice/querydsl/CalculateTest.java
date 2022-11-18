@@ -45,7 +45,10 @@ public class CalculateTest extends TestContext {
                         , LocalDateTime.parse("9999-10-05T15:10:10")
                         , ProvideStatus.PROVIDE_SUCCESS
                         , CalculateType.MAIN_CALCULATE
-                        , null);
+                        , null
+                        , 0
+                        , 2
+                );
 //        clear();
         PageRequest pageRequest = PageRequest.of(0, 2);
         Page<CalculateDto> calculateDtos = calculateRepository.searchCalculate(calcuateSerachCondtion, pageRequest);

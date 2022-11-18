@@ -35,7 +35,9 @@ public class CommissionService {
     public Page<SaleListDto> getSaleList(SaleListSearchCondition saleListSearchCondition, Pageable pageable){
         Page<SaleListDto> saleListDtos = commissionRepository.searchSaleList(saleListSearchCondition, pageable);
         setSaleListValue(saleListDtos);
-        log.info("saleListDtos = {}", saleListDtos);
+        for (SaleListDto saleListDto : saleListDtos) {
+            System.out.println("saleListDto = " + saleListDto);
+        }
         return saleListDtos;
     }
 

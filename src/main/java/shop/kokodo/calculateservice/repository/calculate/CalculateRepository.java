@@ -7,6 +7,7 @@ import shop.kokodo.calculateservice.entity.Calculate;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -33,6 +34,7 @@ public interface CalculateRepository extends JpaRepository<Calculate, Long>, Cal
 
     //mysql에 의존적이라 테스트 코드에서 에러 발생, QueryDsl로 대체한다.
 //    @Query("select function('date_format', c.createdDate, '%Y, %m') as monthDate, sum(c.finalPaymentCost) from Calculate c where c.id = :id group by monthDate")
-//    List<Map<String, Object>> findAnnualSale2(Long id);
+    @Query(value = "select date_format(created_date, '%Y-%m') as monthdate sum(final_payment_cost) from calculate group by monthdate",nativeQuery = true)
+    List<Map<String, Object>> findAnnualSale2(Long id);
 }
 

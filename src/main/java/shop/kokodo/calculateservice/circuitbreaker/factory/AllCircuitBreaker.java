@@ -27,4 +27,8 @@ public class AllCircuitBreaker {
     public static CircuitBreaker createSellerCircuitBreaker() {
         return circuitBreakerFactory.create("sellerCircuitBreaker");
     }
+
+    public static CircuitBreaker createProductCircuitBreaker() {
+        return circuitBreakerFactory.create("productCircuitBreaker");
+    }
 }

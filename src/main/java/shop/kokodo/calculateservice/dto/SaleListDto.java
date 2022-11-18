@@ -16,6 +16,7 @@ import shop.kokodo.calculateservice.enums.calculate.CalculateType;
  * 2022/10/18        namhyeop       최초 생성
  */
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class SaleListDto {

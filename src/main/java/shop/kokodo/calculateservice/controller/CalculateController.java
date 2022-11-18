@@ -3,6 +3,7 @@ package shop.kokodo.calculateservice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.calculateservice.dto.*;
@@ -42,8 +43,10 @@ public class CalculateController {
     }
 
     @PostMapping("/{id}/calculateList")
-    public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition, Pageable pageable) {
-        return Response.success(calculateService.getCalculateList(calculateSearchCondition,pageable));
+    public Response calculateList(@RequestBody CalculateSearchCondition calculateSearchCondition) {
+//        log.info("pageInfo = {}", pageable);
+        PageRequest pageRequest = PageRequest.of(calculateSearchCondition.getPageNumber(), calculateSearchCondition.getPageSize());
+        return Response.success(calculateService.getCalculateList(calculateSearchCondition, pageRequest));
     }
 
     @GetMapping("/{sellerId}/calculateModal/{calculateId}")

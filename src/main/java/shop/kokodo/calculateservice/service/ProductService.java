@@ -14,6 +14,8 @@ import shop.kokodo.calculateservice.repository.orderproduct.OrderProductReposito
 import java.util.ArrayList;
 import java.util.List;
 
+import static shop.kokodo.calculateservice.exception.message.BatchErrorMessage.PRODUCT_FEIGN_NULL;
+
 /**
  * packageName    : shop.kokodo.calculateservice.service
  * fileName       : ProductService
@@ -38,11 +40,12 @@ public class ProductService {
     public List<Long> getSellerId(Long orderId) {
 
         List<Long> productIdByOrderId = orderProductRepository.findProductIdByOrderId(orderId);
+        log.info("productIdByOrderId, {}", productIdByOrderId);
         CircuitBreaker productCircuitBreaker = circuitBreakerFactory.create("productCircuitBreaker");
         List<Long> sellerId = productCircuitBreaker.run(() -> productServiceClient.getProductSellerId(productIdByOrderId), throwable -> new ArrayList<>());
-
+        log.info("Feign arrival after sellerId {}", sellerId);
         if (sellerId.isEmpty()) {
-            throw new FeignClientFailException();
+            throw new FeignClientFailException(PRODUCT_FEIGN_NULL);
         }
 
         return sellerId;

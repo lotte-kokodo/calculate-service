@@ -35,4 +35,6 @@ public class CalculateSearchCondition {
     //    @NotNull(message = "정산 종류에 대한 제공 여부 값은 필수 입니다")
     private CalculateType calculateType;
     private Long id;
+    private Integer pageNumber;
+    private Integer pageSize;
 }
