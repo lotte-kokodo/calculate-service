@@ -34,6 +34,8 @@ public class ApiSchJob extends QuartzJobBean {
 
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("id", new Date().getTime())
+                .addString("startDate", "1964-06-09 12:12:12")
+                .addString("endDate", "2099-06-16 12:12:12")
                 .toJobParameters();
 
         jobLauncher.run(calculateParentJob, jobParameters);
