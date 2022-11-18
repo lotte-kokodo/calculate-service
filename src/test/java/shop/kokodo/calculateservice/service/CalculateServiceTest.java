@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import shop.kokodo.calculateservice.dto.AnnualSaleDto;
 import shop.kokodo.calculateservice.entity.Calculate;
 import shop.kokodo.calculateservice.repository.calculate.CalculateRepository;
 import shop.kokodo.calculateservice.repository.commission.CommissionRepository;
@@ -14,9 +15,12 @@ import shop.kokodo.calculateservice.repository.commission.CommissionRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static shop.kokodo.calculateservice.factory.entity.OrderFactory.createOrder;
 
 /**
  * packageName    : shop.kokodo.calculateservice.service
@@ -43,7 +47,7 @@ class CalculateServiceTest {
     CommissionRepository commissionRepository;
 
     @DisplayName("대시보드 카드 정보")
-    @Test
+    //@Test
     public void dashBoardExpectMoney(){
         LocalDateTime today = LocalDateTime.of(2022, 11, 11, 00,00);
         LocalDateTime toDayStartTime = today.minusDays(7);
@@ -99,22 +103,23 @@ class CalculateServiceTest {
         Assertions.assertThat(percentInfo).isEqualTo("v25000 (100%)");
     }
 
-//    @DisplayName("년도 기준 월별 정산 정보")
+    @DisplayName("년도 기준 월별 정산 정보")
 //    @Test
-//    public void getAnnualSaleList() {
-//        Long sellerId = 1L;
-//        LocalDateTime startDate = LocalDateTime.of(LocalDateTime.now().getYear(), 01, 01, 00,00);
-//        LocalDateTime endDate = LocalDateTime.of(LocalDateTime.now().getYear(), 12, 31, 00,00);
-//        List<Tuple> annualSale = calculateRepository.getAnnualSale(sellerId, startDate, endDate);
-//        List<Long> annualInfo = Arrays.asList(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
-//        for(int idx = 0; idx < annualSale.size(); idx++){
-//            String yearInfo = annualSale.get(idx).get(0, String.class);
-//            int monthInfo = Integer.parseInt(yearInfo.substring(5));
-//            Long saleMount = annualSale.get(idx).get(1, Long.class);
-//            annualInfo.set(monthInfo, saleMount);
-//        }
-//        System.out.println("annualInfo = " + annualInfo);
-//    }
+    public void getAnnualSaleList() {
+        Long sellerId = 1L;
+        LocalDateTime startDate = LocalDateTime.of(LocalDateTime.now().getYear(), 01, 01, 00,00);
+        LocalDateTime endDate = LocalDateTime.of(LocalDateTime.now().getYear(), 12, 31, 00,00);
+        List<Tuple> annualSale = calculateRepository.getAnnualSale(sellerId, startDate, endDate);
+
+        List<Long> annualInfo = Arrays.asList(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        for(int idx = 0; idx < annualSale.size(); idx++){
+            String yearInfo = annualSale.get(idx).get(0, String.class);
+            int monthInfo = Integer.parseInt(yearInfo.substring(5));
+            Long saleMount = annualSale.get(idx).get(1, Long.class);
+            annualInfo.set(monthInfo, saleMount);
+        }
+        System.out.println("annualInfo = " + annualInfo);
+    }
 
 //    @Test
 //    public void beforeFetchClientCalculateTest() throws Exception {

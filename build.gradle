@@ -4,7 +4,6 @@ plugins {
     id 'java'
     //querydsl 추가
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
-    //==================Spring Rest docs==================
 //    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
@@ -110,7 +109,11 @@ tasks.named('test') {
     outputs.dir snippetsDir
     useJUnitPlatform()
 }
+<<<<<<< HEAD
 //
+=======
+
+>>>>>>> 987601ab20b692e3d6dcbbb4932cbfb8fbdc19a9
 ////==================Spring Rest docs==================
 //test {
 //    outputs.dir snippetsDir
@@ -128,7 +131,11 @@ tasks.named('test') {
 //    from file("build/docs/asciidoc")
 //    into file("src/main/resources/static/docs")
 //}
+<<<<<<< HEAD
 //
+=======
+
+>>>>>>> 987601ab20b692e3d6dcbbb4932cbfb8fbdc19a9
 ////==================Spring Rest docs==================
 //build {
 //    dependsOn createDocument

@@ -1,46 +1,26 @@
 server:
-  port: 0
-
-spring:
-  application:
-    name: calculate-service
-  h2:
-    console:
-      enabled: true
-      settings:
-        web-allow-others: true
-      path: /h2-console
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb;MODE=MYSQL
-    username: sa
-    password:
-    generate-unique-name: false
-    hikari:
-      jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL
-  jpa:
-    hibernate:
-      ddl-auto: create
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        storage_engine: innodb
-        format_sql: true
-        globally_quoted_identifiers: true
-    defer-datasource-initialization: true
-  sql:
-    init:
-      mode: always
-  session:
-    store-type: jdbc
+  port: 0 # Eureka 로부터 자동 포트 부여
 
 eureka:
   instance:
-    hostname: localhost
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:9001/eureka
+      defaultZone: http://localhost:9001/eureka
+
+spring:
+  application:
+    name: calculate-service
+  jpa:
+    hibernate:
+      ddl-auto: create
+  batch:
+    job:
+      # qurtz ??? ?? ????? enabled? true? ????.
+      enabled: true
+      names: ${job.name:NONE}
+
+kafka:
+  address: 127.0.0.1:9092
