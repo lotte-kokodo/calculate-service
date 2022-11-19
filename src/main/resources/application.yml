@@ -6,6 +6,8 @@ server:
   port: 0 # Eureka 로부터 자동 포트 부여
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: calculate-service
   zipkin:
