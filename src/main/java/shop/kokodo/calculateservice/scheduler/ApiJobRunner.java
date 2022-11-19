@@ -21,7 +21,7 @@ public class ApiJobRunner extends JobRunner{
     protected void doRun(ApplicationArguments args) {
         JobDetail jobDetail = buildJobDetail(ApiSchJob.class, "calculateParentJob", "batch", new HashMap<>());
         //CronExpression을 사용, 맨 앞에서부터 "초", "분", "시", "일", "주", "월"을 의미함
-        Trigger trigger = buildJobTrigger("0 0/10 * * * *");
+        Trigger trigger = buildJobTrigger("0 0/5 * * * ?");
 //        Trigger trigger = buildJobTrigger("0 10 0 * * ?");
 
         try{
