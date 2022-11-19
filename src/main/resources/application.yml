@@ -20,6 +20,8 @@ spring:
     job:
       enabled: true
       names: ${job.name:NONE}
+    jdbc:
+      initialize-schema: always
   jpa:
     generate-ddl: true
     hibernate:
