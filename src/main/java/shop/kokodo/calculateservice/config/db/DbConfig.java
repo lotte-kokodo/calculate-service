@@ -77,7 +77,7 @@ public class DbConfig {
 
 
     @Bean
-    public PlatformTransactionManager cqrsTransactionManager(EntityManagerFactory entityManagerFactory) {
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager tm = new JpaTransactionManager();
         tm.setEntityManagerFactory(entityManagerFactory);
         return tm;
