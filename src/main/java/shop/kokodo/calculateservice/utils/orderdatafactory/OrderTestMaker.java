@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class OrderTestMaker {
     public static void main(String[] args) throws IOException {
-        FileWriter fw = new FileWriter("/Users/namhyeop/Desktop/OrderData_200000.sql");
+        FileWriter fw = new FileWriter("/Users/namhyeop/Desktop/OrderData_1000.sql");
 
         String orderTable = "orders";
         String orderProductTable = "order_product";
@@ -142,7 +142,7 @@ public class OrderTestMaker {
         //product 10번 + product 20번 = 53800
         atb8.add(39900 + 13900);
 
-        int maxSize = 10000;
+        int maxSize = 1000;
         for (int i = 1; i <= maxSize; i++) {
             String iatb0 = String.valueOf(i);
             String iatb1 = "\'" + atb6.get((int) (Math.random() * 360000) % 360) + "\'";
@@ -610,8 +610,8 @@ public class OrderTestMaker {
         atb1.add("2022-02-26T22:21:24");
         atb1.add("2022-02-27T23:21:24");
         atb1.add("2022-02-28T23:21:24");
-        atb1.add("2022-02-29T16:21:24");
-        atb1.add("2022-02-30T16:21:24");
+        atb1.add("2022-02-28T16:21:24");
+        atb1.add("2022-02-28T16:21:24");
     }
 
     private static ArrayList<String> getAddJanuaryCreateDate() {
@@ -1008,8 +1008,8 @@ public class OrderTestMaker {
         atb1.add("2022-02-26T22:21:24");
         atb1.add("2022-02-27T23:21:24");
         atb1.add("2022-02-28T23:21:24");
-        atb1.add("2022-02-29T16:21:24");
-        atb1.add("2022-02-30T16:21:24");
+        atb1.add("2022-02-28T16:21:24");
+        atb1.add("2022-02-28T16:21:24");
     }
 
     private static ArrayList<String> getAddJanuaryModifiedDate() {

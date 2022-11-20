@@ -66,14 +66,14 @@ public class CalculateStepConfiguration {
     private final OrderKafkaProducer orderKafkaProducer;
     private int chunkSize;
 
-    @Value("${chunkSize:300}")
+    @Value("${chunkSize:10}")
     public void setChunkSize(int chunkSize) {
         this.chunkSize = chunkSize;
     }
 
     private int poolSize;
 
-    @Value("${poolSize:300}")
+    @Value("${poolSize:10}")
     public void setPoolSize(int poolSize) {
         this.poolSize = poolSize;
     }
