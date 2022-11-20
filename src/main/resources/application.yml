@@ -27,7 +27,7 @@ spring:
   jpa:
     generate-ddl: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     show-sql: true
     properties:
@@ -39,7 +39,7 @@ spring:
         physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         globally_quoted_identifiers: true
         hbm2ddl:
-          auto: create
+          auto: update
 logging:
   level:
     org.hibernate.SQL: debug
