@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class OrderTestMaker {
     public static void main(String[] args) throws IOException {
-        FileWriter fw = new FileWriter("/Users/namhyeop/Desktop/OrderData_1000.sql");
+        FileWriter fw = new FileWriter("/Users/namhyeop/Desktop/OrderData_100.sql");
 
         String orderTable = "orders";
         String orderProductTable = "order_product";
@@ -142,7 +142,7 @@ public class OrderTestMaker {
         //product 10번 + product 20번 = 53800
         atb8.add(39900 + 13900);
 
-        int maxSize = 1000;
+        int maxSize = 100;
         for (int i = 1; i <= maxSize; i++) {
             String iatb0 = String.valueOf(i);
             String iatb1 = "\'" + atb6.get((int) (Math.random() * 360000) % 360) + "\'";
