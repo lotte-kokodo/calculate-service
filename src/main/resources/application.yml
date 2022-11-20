@@ -101,7 +101,7 @@ spring:
       on-profile: rds
   datasource:
     hikari:
-      maximum-pool-size: 200
+      maximum-pool-size: 500
     driver-class-name: com.mysql.cj.jdbc.Driver
     url:
     slave-list:
