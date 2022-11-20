@@ -7,7 +7,7 @@ server:
 
 spring:
   main:
-#    allow-bean-definition-overriding: true
+    allow-bean-definition-overriding: true
   application:
     name: calculate-service
   zipkin:
@@ -39,7 +39,7 @@ spring:
         physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         globally_quoted_identifiers: true
         hbm2ddl:
-          auto: update
+          auto: create
 logging:
   level:
     org.hibernate.SQL: debug
