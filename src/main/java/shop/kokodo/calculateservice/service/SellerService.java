@@ -39,6 +39,7 @@ public class SellerService {
 
     public List<CommissionPolicyDto> searchCommissionPolicy(List<Long> sellerId){
         CircuitBreaker sellerCircuitBreaker = circuitBreakerFactory.create("sellerCircuitBreaker");
+        log.info("sellerId Info", sellerId);
         List<CommissionPolicyDto> sellerCommissionPolicyList = sellerCircuitBreaker.run(() -> sellerServiceClient.searchCommissionPolicy(sellerId)
                 , throwable -> new ArrayList<>());
 

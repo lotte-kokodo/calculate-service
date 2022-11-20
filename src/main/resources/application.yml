@@ -86,7 +86,7 @@ spring:
       username: root
       password: 1234
       driver-class-name: com.mysql.jdbc.Driver
-      maximum-pool-size: 200
+      maximum-pool-size: 500
   #      connection-timeout: 3000
   #      max-lifetime: 30000
   batch:
