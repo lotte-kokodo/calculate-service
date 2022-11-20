@@ -61,8 +61,8 @@ public class OrderProductRepositoryTest extends TestContext {
         List<Long> productIdByOrderId = orderProductRepository.findProductIdByOrderId(order.getId());
 
         //then
-        assertThat(productIdByOrderId.get(0)).isEqualTo(orderProduct1.getId());
-        assertThat(productIdByOrderId.get(1)).isEqualTo(orderProduct2.getId());
-        assertThat(productIdByOrderId.get(2)).isEqualTo(orderProduct3.getId());
+        assertThat(productIdByOrderId.get(0)).isEqualTo(2L);
+        assertThat(productIdByOrderId.get(1)).isEqualTo(2L);
+        assertThat(productIdByOrderId.get(2)).isEqualTo(2L);
     }
 }
