@@ -7,7 +7,7 @@ server:
 
 spring:
   main:
-    allow-bean-definition-overriding: true
+#    allow-bean-definition-overriding: true
   application:
     name: calculate-service
   zipkin:
@@ -102,6 +102,8 @@ spring:
   datasource:
     hikari:
       maximum-pool-size: 500
+      #      connection-timeout: 3000
+      #      max-lifetime: 30000
     driver-class-name: com.mysql.cj.jdbc.Driver
     url:
     slave-list:
