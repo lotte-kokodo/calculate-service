@@ -101,7 +101,7 @@ spring:
       on-profile: rds
   datasource:
     hikari:
-      maximum-pool-size: 500
+      maximum-pool-size: 200
 #      connection-timeout: 3000
 #      max-lifetime: 30000
     driver-class-name: com.mysql.cj.jdbc.Driver
