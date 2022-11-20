@@ -11,37 +11,10 @@ endif::[]
 :toclevels: 2
 :sectlinks:
 
-[[Calculate-Commission-SaleList]]
-== Calculate Commission SaleList
-include::{snippets}/calculate-commission-saleList/curl-request.adoc[]
-include::{snippets}/calculate-commission-saleList/http-request.adoc[]
-include::{snippets}/calculate-commission-saleList/http-response.adoc[]
-include::{snippets}/calculate-commission-saleList/request-body.adoc[]
-include::{snippets}/calculate-commission-saleList/response-body.adoc[]
 
-[[Calculate-Dashboard-Card]]
-== Calculate Dashboard Card
-include::{snippets}/calculate-dashboard-card/curl-request.adoc[]
-include::{snippets}/calculate-dashboard-card/http-request.adoc[]
-include::{snippets}/calculate-dashboard-card/http-response.adoc[]
-include::{snippets}/calculate-dashboard-card/request-body.adoc[]
-include::{snippets}/calculate-dashboard-card/response-body.adoc[]
 
-[[Calculate-Expect-Money]]
-== Calculate Expect Money
-include::{snippets}/calculate-expect-money/curl-request.adoc[]
-include::{snippets}/calculate-expect-money/http-request.adoc[]
-include::{snippets}/calculate-expect-money/http-response.adoc[]
-include::{snippets}/calculate-expect-money/request-body.adoc[]
-include::{snippets}/calculate-expect-money/response-body.adoc[]
 
-[[Calculate-List]]
-== Calculate List
-include::{snippets}/calculate-list/curl-request.adoc[]
-include::{snippets}/calculate-list/http-request.adoc[]
-include::{snippets}/calculate-list/http-response.adoc[]
-include::{snippets}/calculate-list/request-body.adoc[]
-include::{snippets}/calculate-list/response-body.adoc[]
+
 
 [[Calculate-Modal-API]]
 == Calculate Modal API

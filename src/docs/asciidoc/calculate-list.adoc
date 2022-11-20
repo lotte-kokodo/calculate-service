@@ -1,26 +1,19 @@
-= 정산 시스템 API 문서
+= Calculate List
 ifndef::snippets[]
-
 :snippets: ./build/generated-snippets
 
 endif::[]
+
 :doctype:  book
 :icons: font
 :source-highlighter: highlightjs // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
 :toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
 :toclevels: 2
 :sectlinks:
-== Calculate Commission Salelist
-link:calculate-commission-salelist.html[]
-
-== Calculate Dashboard Card
-link:calculate-dashboard-card.html[]
-
-== Calculate Expect Money
-link:calculate-expect-money.html[]
-
+[[Calculate-List]]
 == Calculate List
-link:calculate-list.html[]
-
-== Calculate Modal Api
-link:calculate-modal-api.html[]
+include::{snippets}/calculate-list/curl-request.adoc[]
+include::{snippets}/calculate-list/http-request.adoc[]
+include::{snippets}/calculate-list/http-response.adoc[]
+include::{snippets}/calculate-list/request-body.adoc[]
+include::{snippets}/calculate-list/response-body.adoc[]
