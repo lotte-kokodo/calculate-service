@@ -80,10 +80,10 @@ public class OrderTestMaker {
         //5개
         ArrayList<Long> atb5 = new ArrayList<>();
         atb5.add(1L);
-        atb5.add(2L);
-        atb5.add(3L);
-        atb5.add(4L);
-        atb5.add(5L);
+//        atb5.add(2L);
+//        atb5.add(3L);
+//        atb5.add(4L);
+//        atb5.add(5L);
 
         //360개
         ArrayList<String> atb6 = getAddJanuaryModifiedDate();
@@ -149,7 +149,7 @@ public class OrderTestMaker {
             String iatb2 = "\'" + atb6.get((int) (Math.random() * 360000) % 360) + "\'";
             String iatb3 = "\'" + atb3.get((int) (Math.random() * 10000) % 10) + "\'";
             String iatb4 = "\'" + atb4.get((int) (Math.random() * 5000) % 5) + "\'";
-            String iatb5 = String.valueOf(atb5.get((int) (Math.random() * 5000) % 5));
+            String iatb5 = String.valueOf(atb5.get((int) (Math.random() * 1000) % 1));
             String iatb6 = "\'" + atb6.get((int) (Math.random() * 360000) % 360) + "\'";
             String iatb7 = "\'" + atb7.get((int) (Math.random() * 1000) % 1) + "\'";
             String iatb8 = String.valueOf(atb8.get((int) (Math.random() * 10000) % 10));
